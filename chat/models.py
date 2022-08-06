@@ -31,6 +31,12 @@ class Message(models.Model):
     target_id = models.PositiveIntegerField(null=True, blank=True, db_index=True)
     target = GenericForeignKey('target_ct', 'target_id')
 
+    def get_message_content(self):
+        model = self.target_ct.model_class()
+        object = model.objects.get(id=self.target_id)
+
+        return object.content
+
 
 class MessageTextType(models.Model):
     content = models.TextField()

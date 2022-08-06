@@ -107,8 +107,11 @@ class ChatFriendAjax(AjaxRequiredMixin, View):
         # Verifica qual se é a amizade existe, se não, bloqueia a View
         if friend is None:
             return HttpResponseForbidden()
+        
+        messages = friend_object.chat_messages.all()
 
         context.update({
+            'messages': messages,
             'friend': friend,
             'friend_object': friend_object,
         })
@@ -119,7 +122,6 @@ class ChatFriendAjax(AjaxRequiredMixin, View):
 class CreateMessageAjax(AjaxRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         friend_model_id = self.request.POST.get('friend_model_id')
-        print(friend_model_id, "asdkjfg")
         self.user = self.request.user
         self.type = self.request.POST.get('type')
         self.message = self.request.POST.get('message')
@@ -129,7 +131,7 @@ class CreateMessageAjax(AjaxRequiredMixin, View):
                 self.create_text_message(friend_model_id)
             case _:
                 ...
-        
+
         return JsonResponse({'status': "OK"})
 
     def create_text_message(self, friend_model_id, *args, **kwargs):

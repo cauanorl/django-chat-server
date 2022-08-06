@@ -1,4 +1,5 @@
 {% load static %}
+{% load humanize %}
 
 <!-- Chat -->
 
@@ -21,7 +22,28 @@
 <div class="card-body msg_card_body">
 
     
-  <!-- Mensagens ficam aqui -->
-    
+  {% for message in messages %}
+    {% if message.owner != request.user %}
+      <div class="d-flex justify-content-start mb-4">
+        <div class="img_cont_msg">
+          <img src="{% static "default_image/no_image.png" %}" class="rounded-circle user_img_msg">
+        </div>
+        <div class="msg_cotainer">
+          {{ message.get_message_content }}
+          <span class="msg_time" style="text-align: left !important;">{{ message.created|naturalday }}</span>
+        </div>
+      </div>
+    {% else %}
+      <div class="d-flex justify-content-end mb-4">
+        <div class="msg_cotainer_send">
+          {{ message.get_message_content }}
+          <span class="msg_time_send" style="text-align: right !important;">{{ message.created|naturalday }}</span>
+        </div>
+        <div class="img_cont_msg">
+          <img src="{% static "default_image/no_image.png" %}" class="rounded-circle user_img_msg">
+        </div>
+      </div>
+    {% endif %}
+  {% endfor %}
     
 </div>

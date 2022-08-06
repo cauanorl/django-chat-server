@@ -5,3 +5,8 @@ from . import models
 @admin.register(models.Message)
 class MessageAdmin(admin.ModelAdmin):
     ...
+
+
+@admin.register(models.MessageTextType)
+class TextMessageAdmin(admin.ModelAdmin):
+    ...
