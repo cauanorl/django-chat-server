@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block head %}
+
+{% endblock %}
+
+{% block content %}
+
+  {% for user in users %}
+    <div>{{ user }}</div>
+    <form action="{% url "social:friend_request" user.id %}" method="post">
+      {% csrf_token %}
+      <input type="submit" value="Enviar pedido de amizade">
+    </form>
+    <br>
+  {% endfor %}
+
+{% endblock content %}

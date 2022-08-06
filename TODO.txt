@@ -1,0 +1,42 @@
+Tasks
+
+>>> Criar uma página para cadastro de usuário
+>>> >>> Model Profile (Melhorar)
+>>> >>> Model Friend (Encontrar uma forma de melhorar o model para evitar fazer
+                      Multiplas requisições.)
+
+>>> Criar página de Login
+>>> >>> (Ainda pensando em como faze-la)
+
+>>> Descobrir o motívo de ter criado o app Social
+>>> >>> (Caso não for utiliza-lo, apague-o e refatorize o código
+         para o app authentication ou chat)
+
+
+>>> Chat
+>>> >>> Enviar tasks quando uma mensagem for enviada, para informar ao destinatário
+        que chegou uma nova mensagem
+
+>>> >>> Salvar as mensagens no banco de dado, e permitir o envio de fotos e arquivos
+        (Criando um modelo para o envio de mensagens)
+
+
+>>> Mudar banco de dados para PostgreSQL
+
+
+||--==??? Bugs to fix ???--==||
+
+*** Reduzir e melhorar a performace das consultas ao banco de dados
+
+*** Após fazer a requisição AJAX na lista de amigos, os eventos JavaScript
+perdem não funcionam.
+
+*** Quando o usuário dispara o evento de click várias vezes ao mesmo tempo,
+o WebSocket desconecta e a página tem que ser atualizada
+
+
+||| Proximos passos ==>>>
+
+==> Melhorar o desempenho e refatorar os códigos das Views
+
+==> Adicionar os outros eventos AJAX a class Main no JavaScript

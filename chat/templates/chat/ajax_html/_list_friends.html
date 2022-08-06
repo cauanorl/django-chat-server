@@ -1,0 +1,31 @@
+{% load static %}
+
+<!-- Todos os amigos -->
+{% for my_friend in all_accepted_friends %}
+  <li class="friends-list" data-id="{{ my_friend.id }}">
+    <a href="">
+      <div class="d-flex bd-highlight">
+        <div class="img_cont">
+          <img src="{% static "default_image/no_image.png" %}" class="rounded-circle user_img">
+          <span class="online_icon offline"></span>
+        </div>
+        <div class="user_info">
+          <span>
+            {% if my_friend.user_one == request.user %}
+              {{ my_friend.user_two }}
+            {% else %}
+              {{ my_friend.user_one }}
+            {% endif %}
+          </span>
+          <p>
+            {% if my_friend.user_one == request.user %}
+              {{ my_friend.user_two.last_login }}
+            {% else %}
+              {{ my_friend.user_one.last_login }}
+            {% endif %}
+          </p>
+        </div>
+      </div>
+    </a>
+  </li>
+{% endfor %}

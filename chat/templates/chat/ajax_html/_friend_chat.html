@@ -1,0 +1,27 @@
+{% load static %}
+
+<!-- Chat -->
+
+<div class="card-header msg_head" data-id="{{ friend_object.id }}">
+  <div class="d-flex bd-highlight">
+
+    <div class="img_cont">
+      <img src="{% static "default_image/no_image.png" %}" class="rounded-circle user_img">
+      <span class="online_icon"></span>
+    </div>
+    <div class="user_info">
+      <span>{{ friend.username }}</span>
+      <p>1767 Messages</p>
+
+    </div>
+  </div>
+</div>
+
+
+<div class="card-body msg_card_body">
+
+    
+  <!-- Mensagens ficam aqui -->
+    
+    
+</div>

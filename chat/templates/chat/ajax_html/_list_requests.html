@@ -1,0 +1,40 @@
+{% load static %}
+
+<!-- Solicitações para mim -->
+{% for request_for_me in requests_for_me %}
+  <li class="relative">
+    <div class="d-flex bd-highlight">
+      <div class="img_cont">
+        <img src="{% static "default_image/no_image.png" %}" class="rounded-circle user_img">
+        <span class="online_icon wait"></span>
+      </div>
+      <div class="user_info">
+        <span>{{ request_for_me.user_one }}</span>
+        <p>{{ request_for_me.user_one }} te enviou uma solicitação de amizade</p>
+      </div>
+    </div>
+    <div class="invite">
+      <form action="{% url "social:response_friend" request_for_me.id %}" method="post">
+        {% csrf_token %}
+        <button type="submit" name="accept" class="btn btn-success" value="accept">Aceitar</button>
+        <button type="submit" name="accept" class="btn btn-danger" value="refuse">Recusar</button>
+      </form>
+    </div>
+  </li>
+{% endfor %}
+
+<!-- Solicitações enviadas -->
+{% for not_accepted in all_not_accepted %}
+  <li>
+    <div class="d-flex bd-highlight">
+      <div class="img_cont">
+        <img src="{% static "default_image/no_image.png" %}" class="rounded-circle user_img">
+        <span class="online_icon wait"></span>
+      </div>
+      <div class="user_info">
+        <span>{{ not_accepted.user_two }}</span>
+        <p>Esperando aceitar a solicitação de amizade</p>
+      </div>
+    </div>
+  </li>
+{% endfor %}
