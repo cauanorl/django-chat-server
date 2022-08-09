@@ -17,9 +17,7 @@ Tasks
 >>> >>> Enviar tasks quando uma mensagem for enviada, para informar ao destinatário
         que chegou uma nova mensagem
 
->>> >>> Salvar as mensagens no banco de dado, e permitir o envio de fotos e arquivos
-        (Criando um modelo para o envio de mensagens)
-
+>>> >>> permitir o envio de fotos e arquivos
 
 >>> Mudar banco de dados para PostgreSQL
 

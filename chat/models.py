@@ -10,6 +10,9 @@ from authentication.models import Friend
 
 # Create your models here.
 class Message(models.Model):
+    """
+    O model que salva as mensagens enviadas no chat
+    """
     owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
     created = models.DateTimeField(auto_now=True)
     # Mesagens
@@ -32,7 +35,10 @@ class Message(models.Model):
     target = GenericForeignKey('target_ct', 'target_id')
 
     def get_message_content(self):
-        model = self.target_ct.model_class()
+        """ 
+        Metodo que retornará o conteudo da mensagem
+        """
+        model = self.target_ct.model_class()  # O model que controla o conteudo
         object = model.objects.get(id=self.target_id)
 
         return object.content

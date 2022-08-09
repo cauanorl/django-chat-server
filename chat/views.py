@@ -97,17 +97,23 @@ class ChatListFriendsAjax(AjaxRequiredMixin, View):
 
 
 class ChatFriendAjax(AjaxRequiredMixin, View):
+    """
+    Essa view carrega o chat de forma assíncrona com ajax.
+    """
     def post(self, request, *args, **kwargs):
         context = {}
 
         friend_id = self.request.POST.get('friend_id')
         friend_object = get_object_or_404(Friend, id=friend_id)
+
+        # Retorna o "user_one" ou "user_two" do modelo Friend
         friend = friend_object.get_friend(self.request.user)
 
         # Verifica qual se é a amizade existe, se não, bloqueia a View
         if friend is None:
             return HttpResponseForbidden()
         
+        # Todas as mensagens salvas para carrega-las no Chat
         messages = friend_object.chat_messages.all()
 
         context.update({
@@ -120,12 +126,16 @@ class ChatFriendAjax(AjaxRequiredMixin, View):
 
 
 class CreateMessageAjax(AjaxRequiredMixin, View):
+    """
+    Essa view salva as mensagens enviadas no banco de dados
+    """
     def post(self, request, *args, **kwargs):
         friend_model_id = self.request.POST.get('friend_model_id')
         self.user = self.request.user
         self.type = self.request.POST.get('type')
         self.message = self.request.POST.get('message')
 
+        # verifica que tipo de mensagem é (Texto, Imagem, Video, Arquivo)
         match self.type:
             case "text":
                 self.create_text_message(friend_model_id)
@@ -135,6 +145,9 @@ class CreateMessageAjax(AjaxRequiredMixin, View):
         return JsonResponse({'status': "OK"})
 
     def create_text_message(self, friend_model_id, *args, **kwargs):
+        """
+        Cria o objeto Message
+        """
         friend_object = Friend.objects.get(id=friend_model_id)
 
         content = MessageTextType.objects.create(content=self.message)
