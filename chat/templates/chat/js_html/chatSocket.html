@@ -17,6 +17,8 @@ const Main = {
     this.$messageHTML = document.querySelector('.form-control.type_msg')  // O HTML textarea
     this.$friendsList = document.querySelectorAll('.friends-list')  // Ul que fica a lista de amigos
     this.$chatDisplay = document.getElementById('chat_display')  // O HTML do chat completo
+    this.$chatButtonView = document.getElementById("chat_view_id")
+    this.$requestsButtonView = document.getElementById("requests_view_id")
   },
 
   // Criação do CSRF Token para a requisição AJAX
@@ -47,6 +49,10 @@ const Main = {
         item.addEventListener('click', self.Events.friendsList_click_ajax.bind(self))
       }
     });
+
+    this.$chatButtonView.addEventListener('click', self.Events.listFriendsView_click_ajax.bind(self))
+
+    this.$requestsButtonView.addEventListener('click', self.Events.requestsFriendsView_click_ajax.bind(self))
 
   },
 
@@ -155,6 +161,8 @@ const Main = {
         // Adiciona o Chat ao HTML atual
         $('#chat_display')[0].innerHTML = html
 
+        this.$chatDisplay.scrollTop = this.$chatDisplay.scrollHeight
+
         // Seleciona o botão de envio de mensagens e adiciona o evento de click
         this.$sendButton = document.querySelector('span.input-group-text.send_btn')
         this.$sendButton.onclick = this.Events.sendButton_click.bind(this);
@@ -191,71 +199,50 @@ const Main = {
       })
 
     },
+
+    listFriendsView_click_ajax: function(event) {
+      event.preventDefault();  // Evita o comportamento padrão do elemento
+      // Envia uma requisição AJAX para o servidor
+      $.ajax({
+        type: "POST",
+        url: "{% url 'chat:list_data_ajax' 'all_friends' %}",
+        data: {
+          selected: ""
+        }
+      }).done(function(msg) {
+        // Retorna a lista de amizades que já foram aceitas
+        $('ul.contacts.friends-list')[0].innerHTML = msg;
+      });
+
+      if (this.$requestsButtonView.classList.contains('selected')) {
+        this.$requestsButtonView.classList.remove('selected')
+      };
+      this.$chatButtonView.classList.add('selected')
+    },
+
+    requestsFriendsView_click_ajax: function(event) {
+      event.preventDefault();  // Evita o comportamento padrão do elemento
+      // Envia uma requisição AJAX para o servidor
+      $.ajax({
+        type: "POST",
+        url: "{% url 'chat:list_data_ajax' 'friend_requests' %}",
+        data: {
+          selected: ""
+        }
+      }).done(function(msg) {
+        // Retorna a lista de amizades com solicitações pendentes
+        $('ul.contacts.friends-list')[0].innerHTML = msg;
+      });
+
+      if (this.$chatButtonView.classList.contains('selected')) {
+        this.$chatButtonView.classList.remove('selected')
+      };
+      this.$requestsButtonView.classList.add('selected')
+    }
   }
 }
 
 
 Main.init()
-
-
-// Ajax
-
-const $chatButtonView = $("#chat_view_id")
-const $requestsButtonView = $("#requests_view_id")
-
-
-// Cria uma validação de CSRF para metodos posts
-var csrftoken = Cookies.get('csrftoken');
-function csrfSafeMethod(method) {
-  // Esses metodos não exigem proteção contra CSRF
-  return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-}
-$.ajaxSetup({
-  beforeSend: function(xhr, settings) {
-    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-      xhr.setRequestHeader("X-CSRFToken", csrftoken)
-    }
-  }
-});
-
-$requestsButtonView.click(function(e) {
-  e.preventDefault();  // Evita o comportamento padrão do elemento
-  // Envia uma requisição AJAX para o servidor
-  $.ajax({
-    type: "POST",
-    url: "{% url 'chat:list_data_ajax' 'friend_requests' %}",
-    data: {
-      selected: ""
-    }
-  }).done(function(msg) {
-    // Retorna a lista de amizades com solicitações pendentes
-    $('ul.contacts.friends-list')[0].innerHTML = msg;
-  });
-
-  if ($chatButtonView[0].classList.contains('selected')) {
-    $chatButtonView[0].classList.remove('selected')
-  };
-  $requestsButtonView[0].classList.add('selected')
-});
-
-$chatButtonView.click(function(e) {
-  e.preventDefault();  // Evita o comportamento padrão do elemento
-  // Envia uma requisição AJAX para o servidor
-  $.ajax({
-    type: "POST",
-    url: "{% url 'chat:list_data_ajax' 'all_friends' %}",
-    data: {
-      selected: ""
-    }
-  }).done(function(msg) {
-    // Retorna a lista de amizades que já foram aceitas
-    $('ul.contacts.friends-list')[0].innerHTML = msg;
-  });
-
-  if ($requestsButtonView[0].classList.contains('selected')) {
-    $requestsButtonView[0].classList.remove('selected')
-  };
-  $chatButtonView[0].classList.add('selected')
-});
 
 </script>
