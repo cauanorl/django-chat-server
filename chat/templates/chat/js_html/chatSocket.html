@@ -13,11 +13,17 @@ const Main = {
   // A seleção das tags HTML que serão usadas nos métodos
   casheSelectors: function() {
     this.$sendMessageForm = document.querySelector('.card-footer')
-    this.$chatMessage = document.querySelector('.card-body.msg_card_body')  // Selecionando o HTML do chat
-    this.$messageHTML = document.querySelector('.form-control.type_msg')  // O HTML textarea
-    this.$friendsList = document.querySelectorAll('.friends-list')  // Ul que fica a lista de amigos
-    this.$chatDisplay = document.getElementById('chat_display')  // O HTML do chat completo
+    // Selecionando o HTML do chat
+    this.$chatMessage = document.querySelector('.card-body.msg_card_body')
+    // O HTML textarea
+    this.$messageHTML = document.querySelector('.form-control.type_msg')
+    // Ul que fica a lista de amigos
+    this.$friendsList = document.querySelectorAll('.friends-list')
+    // O HTML do chat completo
+    this.$chatDisplay = document.getElementById('chat_display')
+    // Botão que renderiza a lista de amigos
     this.$chatButtonView = document.getElementById("chat_view_id")
+    // Botão que renderiza as requisições de amizades
     this.$requestsButtonView = document.getElementById("requests_view_id")
   },
 
@@ -46,13 +52,16 @@ const Main = {
     this.$friendsList.forEach(function(item, index) {
       // O index 0 é a <ul>, por isso não a ínclui
       if (index !== 0) {
-        item.addEventListener('click', self.Events.friendsList_click_ajax.bind(self))
+        item.addEventListener(
+          'click', self.Events.friendsList_click_ajax.bind(self))
       }
     });
 
-    this.$chatButtonView.addEventListener('click', self.Events.listFriendsView_click_ajax.bind(self))
+    this.$chatButtonView.addEventListener(
+      'click', self.Events.listFriendsView_click_ajax.bind(self))
 
-    this.$requestsButtonView.addEventListener('click', self.Events.requestsFriendsView_click_ajax.bind(self))
+    this.$requestsButtonView.addEventListener(
+      'click', self.Events.requestsFriendsView_click_ajax.bind(self))
 
   },
 
@@ -69,7 +78,8 @@ const Main = {
 
     connect: function(friend_model_id) {
       this.detectSecureUrl();
-      this.$chatMessage = document.querySelector('.card-body.msg_card_body')  // Selecionando o HTML do chat
+      // Selecionando o HTML do chat
+      this.$chatMessage = document.querySelector('.card-body.msg_card_body')
 
       // URL do WebSocket
       let url = `${this.base_url}ws/chat/room/${friend_model_id}/`
@@ -90,14 +100,16 @@ const Main = {
     
     // Recebe as mensagens do server e a coloca no HTML do chat
     receiveChatMessage: function(datas) {
-      let data = JSON.parse(datas.data);  // O json que veio do server
-      let message = document.createTextNode(data.message);  // a mensagem digitada pelo usuário
+      // O json que veio do server
+      let data = JSON.parse(datas.data);
+      // a mensagem digitada pelo usuário
+      let message = document.createTextNode(data.message);
 
-      let isMe = data.user !== '{{ request.user }}'
+      let isMe = data.user !== '{{ request.user }}';
 
       if (!this.$chatMessage) {
          // Selecionando o HTML do chat se não existir
-        this.$chatMessage = document.querySelector('.card-body.msg_card_body')
+        this.$chatMessage = document.querySelector('.card-body.msg_card_body');
       }
 
       if (isMe) {
@@ -140,7 +152,7 @@ const Main = {
     friendsList_click_ajax: function(event) {
       event.preventDefault();
       // ID do model Friend
-      let friend_model_id = event.currentTarget.dataset.id
+      let friend_model_id = event.currentTarget.dataset.id;
 
       // Desconecta do WebSocket atual para conectar a outro
       if (this.chatSocket) {
@@ -164,29 +176,33 @@ const Main = {
         this.$chatDisplay.scrollTop = this.$chatDisplay.scrollHeight
 
         // Seleciona o botão de envio de mensagens e adiciona o evento de click
-        this.$sendButton = document.querySelector('span.input-group-text.send_btn')
+        this.$sendButton = document.querySelector(
+          'span.input-group-text.send_btn')
         this.$sendButton.onclick = this.Events.sendButton_click.bind(this);
       })
 
-      // Quando o usuário abrir um chat, o botão de enviar mensagem sairá do display none
-      this.$sendMessageForm.classList.remove('display_none')
+      // Quando o usuário abrir um chat, o botão de enviar
+      // mensagem sairá do display none
+      this.$sendMessageForm.classList.remove('display_none');
     },
 
     // Evento de click que envia a mensagem do usuário para o WebSocket
     sendButton_click: function(event) {
-      let message = this.$messageHTML.value
+      let message = this.$messageHTML.value;
       let json_message = JSON.stringify({
         'message': message,
       })  // Transforma a mensagem em json
 
-      this.chatSocket.send(json_message)  // Envia para o WebSocket
-      this.$messageHTML.value = ''  // Remove o conteudo que foi escrito no textarea da mensagem
+      // Envia para o WebSocket
+      this.chatSocket.send(json_message);
+      // Remove o conteudo que foi escrito no textarea da mensagem
+      this.$messageHTML.value = '';
 
       if (!this.$chatUser) {
         this.$chatUser = document.querySelector('.card-header.msg_head')
       }
 
-      friend_object_id = this.$chatUser.dataset.id
+      friend_object_id = this.$chatUser.dataset.id;
 
       $.ajax({
         type: "POST",
@@ -196,7 +212,7 @@ const Main = {
           message: message,
           friend_model_id: friend_object_id
         }
-      })
+      });
 
     },
 
@@ -215,9 +231,9 @@ const Main = {
       });
 
       if (this.$requestsButtonView.classList.contains('selected')) {
-        this.$requestsButtonView.classList.remove('selected')
+        this.$requestsButtonView.classList.remove('selected');
       };
-      this.$chatButtonView.classList.add('selected')
+      this.$chatButtonView.classList.add('selected');
     },
 
     requestsFriendsView_click_ajax: function(event) {
@@ -235,9 +251,9 @@ const Main = {
       });
 
       if (this.$chatButtonView.classList.contains('selected')) {
-        this.$chatButtonView.classList.remove('selected')
+        this.$chatButtonView.classList.remove('selected');
       };
-      this.$requestsButtonView.classList.add('selected')
+      this.$requestsButtonView.classList.add('selected');
     }
   }
 }
