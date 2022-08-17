@@ -10,21 +10,7 @@
     {% endif %}
   </title>
   <link rel="stylesheet" href="{% static "chat/css/style.css" %}">
-  <!-- Font Awesome -->
-  <link
-  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
-  rel="stylesheet"
-  />
-  <!-- Google Fonts -->
-  <link
-  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
-  rel="stylesheet"
-  />
-  <!-- MDB -->
-  <link
-  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.3.0/mdb.min.css"
-  rel="stylesheet"
-  />
+
 
 {% endblock %}
 
@@ -81,53 +67,16 @@
 
 
     <div class="main-chat" id="chat_display">
-      <div class="chat-header">
-        <div class="chat-user-image">
-          <img
-            src="{% static 'default_image/no_image.png' %}"
-            class="rounded-circle user_img"
-            alt="Foto de usuário"
-            loading="lazy"
-          />
+      <div class="default-chat">
+        <div class="content-img-default-chat">
+          <img src="{% static "default_image/chat_default.svg" %}" alt="">
         </div>
-        <div class="chat-user-info">
-          <div>Cauanorl</div>
-          <p>Visto pela última vez em 23 de agosto</p>
-        </div>
-      </div>
-
-      <div class="chat-messages chat">
-        
-        <!-- User messages -->
-        <div class="d-flex justify-content-end mb-4">
-          <div class="msg_cotainer_send">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Et consequuntur ratione 
-            <span class="msg_time_send">8:55 AM, Today</span>
-          </div>
-        </div>
-
-
-        <!-- Other messages-->
-        <div class="d-flex justify-content-start mb-4">
-          <div class="msg_cotainer">
-            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Et consequuntur ratione 
-            <span class="msg_time">8:40 AM, Today</span>
-          </div>
-        </div>
-
-      </div>
-
-      <div class="div-send-message-control">
-        <div class="send-files">
-          <a href="">
-            <i class="fas fa-image fa-3x"></i>
-          </a>
-        </div>
-        <div class="div-send-message">
-          <input type="text" value="" class="send-message" placeholder="Aa">
+        <div class="default-chat-text">
+          <h2>Comece uma conversa!</h2>
         </div>
       </div>
     </div>
+
   </main>
 
 
