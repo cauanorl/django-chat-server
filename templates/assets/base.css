@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=DynaPuff&display=swap');
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+:root {
+  font-size: 62.5%;
+
+  --color-one: rgb(248, 248, 248);
+  --color-two: rgb(211, 211, 211);
+  --color-three: rgb(146, 146, 146);
+  --color-four: rgb(71, 71, 71);
+  --color-five: rgb(228, 228, 228);
+}
+
+body {
+  background-color: rgb(19, 149, 255) !important;
+}
+
+#navbar-header {
+  height: 7.5rem;
+  background-color: var(--color-one);
+  border-bottom: 1px solid var(--color-two);
+}
+
+.nav-title {
+  letter-spacing: .3rem;
+  font-weight: bold;
+  font-size: 3.5rem;
+  text-shadow: .3rem .3rem .5rem rgba(0, 0, 0, 0.377);
+  font-family: 'DynaPuff', cursive;
+}
+
+.nav-title span {
+  color: rgb(0, 119, 255);
+}
+
+.main-container {
+  margin: 0 auto;
+  max-width: 180.0rem;
+  height: 100%;
+  padding: 0rem 3rem;
+}
+
+.nav-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.nav-img-content {
+  max-width: 100%;
+  width: 6rem;
+  height: 6rem;
+}
+
+.principal-user-img {
+  width: 100%;
+}
+
+.user-content, .user-nav-links {
+  align-items: center;
+  display: flex;
+}
+
+.user-nav-links {
+  margin-right: 3rem;
+}
+
+.nav-item {
+  padding: 2rem 1.5rem;
+  margin-right: .5rem;
+}
+
+a.nav-link {
+  color: var(--color-three);
+}
+
+a.nav-link:hover, a.nav-link:focus {
+  color: var(--color-four);
+}
+
+.badge-notification {
+  font-size: 1rem !important;
+}
+
+.center-links {
+  display: flex;
+  list-style: none;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  font-size: 2rem;
+  gap: 0rem 1rem;
+}
+
+.center-links li {
+  position: relative;
+}
+
+.center-links li a {
+  padding: 3rem;
+  color: rgb(99, 99, 99);
+}
+
+.center-links li a:hover {
+  color: rgb(46, 46, 46);
+}
+
+div.link-animation {
+  position: absolute;
+  bottom: -67%;
+  right: 50%;
+  left: 50%;
+  height: .3rem;
+  background-color: var(--color-four);
+  transition: all 300ms ease-in-out;
+}
+
+.center-links li a:hover + div.link-animation {
+  right: 10%;
+  left: 10%;
+}
+
+.navbar-nav {
+  margin-right: 3rem
+}
+
+
+

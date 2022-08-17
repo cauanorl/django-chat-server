@@ -12,19 +12,20 @@ const Main = {
 
   // A seleção das tags HTML que serão usadas nos métodos
   casheSelectors: function() {
-    this.$sendMessageForm = document.querySelector('.card-footer')
+    this.$sendMessageForm = document.querySelector('.div-send-message-control')
+
     // Selecionando o HTML do chat
-    this.$chatMessage = document.querySelector('.card-body.msg_card_body')
-    // O HTML textarea
-    this.$messageHTML = document.querySelector('.form-control.type_msg')
+    this.$chatMessage = document.querySelector('.chat-messages')
+
+    // O input
+    this.$inputMessage = document.querySelector('.send-message')
+  
     // Ul que fica a lista de amigos
     this.$friendsList = document.querySelectorAll('.friends-list')
+  
     // O HTML do chat completo
     this.$chatDisplay = document.getElementById('chat_display')
-    // Botão que renderiza a lista de amigos
-    this.$chatButtonView = document.getElementById("chat_view_id")
-    // Botão que renderiza as requisições de amizades
-    this.$requestsButtonView = document.getElementById("requests_view_id")
+
   },
 
   // Criação do CSRF Token para a requisição AJAX
@@ -57,11 +58,7 @@ const Main = {
       }
     });
 
-    this.$chatButtonView.addEventListener(
-      'click', self.Events.listFriendsView_click_ajax.bind(self))
-
-    this.$requestsButtonView.addEventListener(
-      'click', self.Events.requestsFriendsView_click_ajax.bind(self))
+    this.$inputMessage.onkeypress = self.Events.inputText_keypress.bind(self)
 
   },
 
@@ -79,7 +76,7 @@ const Main = {
     connect: function(friend_model_id) {
       this.detectSecureUrl();
       // Selecionando o HTML do chat
-      this.$chatMessage = document.querySelector('.card-body.msg_card_body')
+      this.$chatMessage = document.querySelector('.chat-messages')
 
       // URL do WebSocket
       let url = `${this.base_url}ws/chat/room/${friend_model_id}/`
@@ -109,19 +106,16 @@ const Main = {
 
       if (!this.$chatMessage) {
          // Selecionando o HTML do chat se não existir
-        this.$chatMessage = document.querySelector('.card-body.msg_card_body');
+        this.$chatMessage = document.querySelector('.chat-messages');
       }
 
       if (isMe) {
         // Mensagem do User atual
         this.$chatMessage.innerHTML += `
           <div class="d-flex justify-content-start mb-4">
-            <div class="img_cont_msg">
-              <img src="{% static "default_image/no_image.png" %}" class="rounded-circle user_img_msg">
-            </div>
             <div class="msg_cotainer">
               ${message.textContent}
-              <span class="msg_time">8:40 AM, Today</span>
+              <span class="msg_time">Now</span>
             </div>
           </div>
         `
@@ -131,10 +125,7 @@ const Main = {
           <div class="d-flex justify-content-end mb-4">
             <div class="msg_cotainer_send">
               ${message.textContent}
-              <span class="msg_time_send">8:55 AM, Today</span>
-            </div>
-            <div class="img_cont_msg">
-              <img src="{% static "default_image/no_image.png" %}" class="rounded-circle user_img_msg">
+              <span class="msg_time_send">Now</span>
             </div>
           </div>
         `
@@ -173,12 +164,12 @@ const Main = {
         // Adiciona o Chat ao HTML atual
         $('#chat_display')[0].innerHTML = html
 
-        this.$chatDisplay.scrollTop = this.$chatDisplay.scrollHeight
-
-        // Seleciona o botão de envio de mensagens e adiciona o evento de click
-        this.$sendButton = document.querySelector(
-          'span.input-group-text.send_btn')
-        this.$sendButton.onclick = this.Events.sendButton_click.bind(this);
+        // Seleciona as tags HTML novamente
+        this.casheSelectors()
+        // Adiciona o evento de KeyPress no input das mensagens
+        this.$inputMessage.onkeypress = this.Events.inputText_keypress.bind(this)
+        
+        this.$chatMessage.scrollTop = this.$chatMessage.scrollHeight
       })
 
       // Quando o usuário abrir um chat, o botão de enviar
@@ -187,8 +178,13 @@ const Main = {
     },
 
     // Evento de click que envia a mensagem do usuário para o WebSocket
-    sendButton_click: function(event) {
-      let message = this.$messageHTML.value;
+    inputText_keypress: function(event) {
+      let currentTarget = event.currentTarget
+
+      if (event.key !== "Enter" || currentTarget.value.trim() === '') {
+        return
+      }
+      let message = currentTarget.value;
       let json_message = JSON.stringify({
         'message': message,
       })  // Transforma a mensagem em json
@@ -196,13 +192,9 @@ const Main = {
       // Envia para o WebSocket
       this.chatSocket.send(json_message);
       // Remove o conteudo que foi escrito no textarea da mensagem
-      this.$messageHTML.value = '';
+      currentTarget.value = '';
 
-      if (!this.$chatUser) {
-        this.$chatUser = document.querySelector('.card-header.msg_head')
-      }
-
-      friend_object_id = this.$chatUser.dataset.id;
+      friend_object_id = currentTarget.dataset.id
 
       $.ajax({
         type: "POST",
@@ -216,45 +208,6 @@ const Main = {
 
     },
 
-    listFriendsView_click_ajax: function(event) {
-      event.preventDefault();  // Evita o comportamento padrão do elemento
-      // Envia uma requisição AJAX para o servidor
-      $.ajax({
-        type: "POST",
-        url: "{% url 'chat:list_data_ajax' 'all_friends' %}",
-        data: {
-          selected: ""
-        }
-      }).done(function(msg) {
-        // Retorna a lista de amizades que já foram aceitas
-        $('ul.contacts.friends-list')[0].innerHTML = msg;
-      });
-
-      if (this.$requestsButtonView.classList.contains('selected')) {
-        this.$requestsButtonView.classList.remove('selected');
-      };
-      this.$chatButtonView.classList.add('selected');
-    },
-
-    requestsFriendsView_click_ajax: function(event) {
-      event.preventDefault();  // Evita o comportamento padrão do elemento
-      // Envia uma requisição AJAX para o servidor
-      $.ajax({
-        type: "POST",
-        url: "{% url 'chat:list_data_ajax' 'friend_requests' %}",
-        data: {
-          selected: ""
-        }
-      }).done(function(msg) {
-        // Retorna a lista de amizades com solicitações pendentes
-        $('ul.contacts.friends-list')[0].innerHTML = msg;
-      });
-
-      if (this.$chatButtonView.classList.contains('selected')) {
-        this.$chatButtonView.classList.remove('selected');
-      };
-      this.$requestsButtonView.classList.add('selected');
-    }
   }
 }
 

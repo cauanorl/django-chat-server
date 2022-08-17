@@ -10,121 +10,125 @@
     {% endif %}
   </title>
   <link rel="stylesheet" href="{% static "chat/css/style.css" %}">
+  <!-- Font Awesome -->
+  <link
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+  rel="stylesheet"
+  />
+  <!-- Google Fonts -->
+  <link
+  href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+  rel="stylesheet"
+  />
+  <!-- MDB -->
+  <link
+  href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.3.0/mdb.min.css"
+  rel="stylesheet"
+  />
+
 {% endblock %}
 
 {% block content %}
-    {% include "partials/_navbar.html" %}
+  <main class="main-container">
+    <div class="aside-friends-list">
+      <div class="friends-list-header">
+        <h1>Chats</h1>
+        <div class="form-search-chat">
+          <div class="search-separator"></div>
+          <input type="search" name="search-chat" id="search-chat" placeholder="Buscar contato">
+        </div>
+      </div>
+      <div class="principal-div-friend-list">
+        <ul class="friends-list">
 
 
-    <!-- CHAT -->
-
-    <div class="container-xl mt-4">
-      <div class="row">
-        <div class="col-5">
-          <div class="friends">
-            <div class="relative">
-              <nav class="contacts-nav">
-                <ul class="contact-links">
-                  <li>
-                    <a href="" id="chat_view_id" class="{% if selected == "all_friends" %}selected{% endif %}">Chat</a>
-                  </li>
-                  <li>
-                    <a href="" id="requests_view_id" class="{% if selected == "friend_requests" %}selected{% endif %}">Solicitações</a>
-                  </li>
-                </ul>
-              </nav>
-            </div>
-            <ul class="contacts friends-list">
-
-              <!-- Todos os amigos -->
-              {% for my_friend in all_accepted_friends %}
-                <li class="friends-list" data-id="{{ my_friend.id }}">
-                  <a href="">
-                    <div class="d-flex bd-highlight">
-                      <div class="img_cont">
-                        <img src="{% static "default_image/no_image.png" %}" class="rounded-circle user_img">
-                        <span class="online_icon offline"></span>
-                      </div>
-                      <div class="user_info">
-                        <span>
-                          {% if my_friend.user_one == request.user %}
-                            {{ my_friend.user_two }}
-                          {% else %}
-                            {{ my_friend.user_one }}
-                          {% endif %}
-                        </span>
-                        <p>
-                          {% if my_friend.user_one == request.user %}
-                            {{ my_friend.user_two.last_login }}
-                          {% else %}
-                            {{ my_friend.user_one.last_login }}
-                          {% endif %}
-                        </p>
-                      </div>
+          {% for my_friend in all_accepted_friends %}
+            <li class="friends-list" data-id="{{ my_friend.id }}">
+              <div class="friend">
+                <a href="">
+                  <div class="friend-img-content">
+                    <img
+                      src="{% static 'default_image/no_image.png' %}"
+                      class="rounded-circle user_img"
+                      alt="Foto de usuário"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div class="friend-info">
+                    <div class="friend-username">
+                      {% if my_friend.user_one == request.user %}
+                        {{ my_friend.user_two }}
+                      {% else %}
+                        {{ my_friend.user_one }}
+                      {% endif %}
                     </div>
-                  </a>
-                </li>
-              {% endfor %}
+                    <p class="last-seen">
+                      {% if my_friend.user_one == request.user %}
+                        {{ my_friend.user_two.last_login }}
+                      {% else %}
+                        {{ my_friend.user_one.last_login }}
+                      {% endif %}
+                    </p>
+                  </div>
+                </a>
+              </div>
+            </li>
+          {% endfor %}
 
-              <!-- ONLINE -->
-              <li>
-                <div class="d-flex bd-highlight">
-                  <div class="img_cont">
-                    <img src="https://2.bp.blogspot.com/-8ytYF7cfPkQ/WkPe1-rtrcI/AAAAAAAAGqU/FGfTDVgkcIwmOTtjLka51vineFBExJuSACLcBGAs/s320/31.jpg" class="rounded-circle user_img">
-                    <span class="online_icon offline"></span>
-                  </div>
-                  <div class="user_info">
-                    <span>Taherah Big</span>
-                    <p>Taherah left 7 mins ago</p>
-                  </div>
-                </div>
-              </li>
+        </ul>
+      </div>
+    </div>
 
-              <!-- OFFLINE -->
-              <li>
-                <div class="d-flex bd-highlight">
-                  <div class="img_cont">
-                    <img src="https://i.pinimg.com/originals/ac/b9/90/acb990190ca1ddbb9b20db303375bb58.jpg" class="rounded-circle user_img">
-                    <span class="online_icon"></span>
-                  </div>
-                  <div class="user_info">
-                    <span>Sami Rafi</span>
-                    <p>Sami is online</p>
-                  </div>
-                </div>
-              </li>
 
-            </ul>
+    <div class="main-chat" id="chat_display">
+      <div class="chat-header">
+        <div class="chat-user-image">
+          <img
+            src="{% static 'default_image/no_image.png' %}"
+            class="rounded-circle user_img"
+            alt="Foto de usuário"
+            loading="lazy"
+          />
+        </div>
+        <div class="chat-user-info">
+          <div>Cauanorl</div>
+          <p>Visto pela última vez em 23 de agosto</p>
+        </div>
+      </div>
+
+      <div class="chat-messages chat">
+        
+        <!-- User messages -->
+        <div class="d-flex justify-content-end mb-4">
+          <div class="msg_cotainer_send">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Et consequuntur ratione 
+            <span class="msg_time_send">8:55 AM, Today</span>
           </div>
         </div>
-        <div class="col-7">
 
-          <div class="chat">
-            <div class="card" id="">
-              <div id="chat_display">
 
-                {% include 'chat/partials/_default.html' %}
-
-              </div>
-              <!-- Input Mensagem -->
-              <div class="card-footer display_none">
-                <div class="input-group">
-                  <div class="input-group-append">
-                    <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
-                  </div>
-                  <textarea name="" class="form-control type_msg" placeholder="Type your message..." style="min-height: 90px !important;"></textarea>
-                  <div class="input-group-append">
-                    <span class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></span>
-                  </div>
-                </div>
-              </div>
-
-            </div>
+        <!-- Other messages-->
+        <div class="d-flex justify-content-start mb-4">
+          <div class="msg_cotainer">
+            Lorem ipsum dolor sit amet consectetur, adipisicing elit. Et consequuntur ratione 
+            <span class="msg_time">8:40 AM, Today</span>
           </div>
+        </div>
 
+      </div>
+
+      <div class="div-send-message-control">
+        <div class="send-files">
+          <a href="">
+            <i class="fas fa-image fa-3x"></i>
+          </a>
+        </div>
+        <div class="div-send-message">
+          <input type="text" value="" class="send-message" placeholder="Aa">
         </div>
       </div>
     </div>
+  </main>
 
 
 
@@ -136,10 +140,4 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   {% include "chat/js_html/chatSocket.html" %}
 
-  <!-- MDB -->
-  <script
-  type="text/javascript"
-  src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/4.3.0/mdb.min.js"
-  ></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 {% endblock %}

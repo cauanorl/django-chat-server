@@ -36,6 +36,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         json_data = json.loads(text_data)
         message = json_data.get('message')
         message = re.sub(r'<[^>]+?>', '', message)  # Remove as tag HTML das mensagens
+        
 
         # Enviando mensagem para o grupo que foi criado
         await self.channel_layer.group_send(
