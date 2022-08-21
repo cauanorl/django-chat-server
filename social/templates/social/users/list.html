@@ -1,18 +1,66 @@
 {% extends "base.html" %}
+{% load static %}
+
 
 {% block head %}
-
+  <link rel="stylesheet" href="{% static "social/css/social.css" %}">
 {% endblock %}
 
 {% block content %}
 
-  {% for user in users %}
-    <div>{{ user }}</div>
-    <form action="{% url "social:friend_request" user.id %}" method="post">
-      {% csrf_token %}
-      <input type="submit" value="Enviar pedido de amizade">
-    </form>
-    <br>
-  {% endfor %}
 
+  <main class="main-container social">
+
+    <div class="user-profile-details">
+      <div class="perfil-image-content">
+        <img src="{% static "default_image/EU.jpg" %}" alt="" class="rounded-circle">
+      </div>
+      <div class="div-separator"></div>
+      <div class="user-info">
+        <div class="info">
+          <span class="default-text">Username:</span> <span>{{ request.user.username }}</span>
+        </div>
+        <div class="info">
+          <span class="default-text">Idade:</span> <span>18</span>
+        </div>
+      </div>
+      <div class="div-separator"></div>
+      <div class="about-me">
+        <span class="default-text-inline">Sobre mim:</span> Lorem ipsum, dolor sit amet consectetur adipisicing elit. Illum aliquam pariatur ipsum dolore? Accusantium cupiditate ea nihil qui? Voluptates esse cum corporis, accusantium nisi repudiandae saepe quam officiis magnam consectetur?
+
+      </div>
+    </div>
+
+    <div class="content-users-list">
+      <div>
+
+      </div>
+      <div class="add-friends-content">
+        <ul>
+          {% for user in users %}
+            <li class="add-user">
+              <div class="user-image-content">
+                <img src="{% static "default_image/EU.jpg" %}" alt="" class="rounded-circle">
+              </div>
+              <div class="friend-user-info">
+                <div>
+                  <span class="username">{{ user }}</span>
+                </div>
+              </div>
+              <div class="form-friend-request">
+                <form action="{% url "social:friend_request" user.id %}" method="post">
+                  {% csrf_token %}
+                  <input type="submit" value="Enviar pedido de amizade">
+                </form>
+              </div>
+            </li>
+          {% endfor %}
+
+
+        </ul>
+      </div>
+    </div>
+    
+  </main>
+  
 {% endblock content %}

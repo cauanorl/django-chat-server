@@ -1,0 +1,139 @@
+@import url('https://fonts.googleapis.com/css2?family=Silkscreen&display=swap');
+
+main.social {
+  display: flex;
+}
+
+.user-profile-details, .content-users-list {
+  margin-top: 3rem;
+  max-height: 90vh;
+  min-height: 90vh;
+  background-color: var(--color-one);
+  border: 1px solid var(--color-two);
+}
+
+.user-profile-details {
+  width: 35%;
+}
+
+.perfil-image-content {
+  margin: 8rem auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  min-height: 30rem;
+}
+
+.perfil-image-content img {
+  width: 100%;
+  min-height: 20rem;
+}
+
+.div-separator {
+  width: 100%;
+  height: 1px;
+  background: var(--color-two);
+}
+
+.user-info {
+  padding: 2.5rem 1.4rem;
+}
+
+.user-info span {
+  display: inline-block;
+  align-items: center;
+  font-size: 2.5rem;
+}
+
+span.default-text-inline {
+  font-family: 'Silkscreen', cursive;
+  font-size: 2rem;
+  word-spacing: -1px;
+}
+
+span.default-text {
+  font-family: 'Silkscreen', cursive;
+  font-size: 2rem;
+  margin-right: 2.5rem;
+  word-spacing: -1px;
+}
+
+.user-info .info {
+  display: flex;
+  align-items: center;
+}
+
+.about-me {
+  padding: 2.5rem 1.4rem;
+  font-size: 2.5rem;
+}
+
+/*
+
+Users List
+
+*/
+
+.content-users-list {
+  width: 65%;
+  border-left: none;
+  max-height: 90vh;
+  overflow: auto;
+}
+
+.content-users-list ul {
+  list-style: none;
+  padding: 0rem;
+  margin: 0rem;
+  max-height: 100%;
+  overflow: auto;
+}
+
+
+.add-user {
+  padding: 1.5rem 2rem;
+  width: 100%;
+  border-bottom: 1px solid var(--color-two);
+  display: flex;
+}
+
+.user-image-content {
+  width: 9rem;
+  margin-right: 2.5rem;
+}
+
+.user-image-content img {
+  width: 100%;
+}
+
+.friend-user-info{
+  margin-top: 1rem;
+}
+
+.friend-user-info + div {
+  margin-bottom: 2rem;
+}
+
+.add-user .username {
+  font-size: 2rem
+}
+
+.add-user .extra-info {
+  font-size: 1.6rem;
+  margin-top: 1rem;
+}
+
+.form-friend-request {
+  margin-top: 1rem; 
+  width: 100%;  
+}
+
+.form-friend-request form {
+  text-align: end;
+}
+
+.form-friend-request input {
+  padding: 1rem 2rem;
+  font-size: 1.8rem;
+}

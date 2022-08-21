@@ -8,10 +8,6 @@ Tasks
 >>> Criar página de Login
 >>> >>> (Ainda pensando em como faze-la)
 
->>> Descobrir o motívo de ter criado o app Social
->>> >>> (Caso não for utiliza-lo, apague-o e refatorize o código
-         para o app authentication ou chat)
-
 
 >>> Chat
 >>> >>> Enviar tasks quando uma mensagem for enviada, para informar ao destinatário

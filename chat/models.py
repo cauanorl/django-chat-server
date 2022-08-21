@@ -48,5 +48,5 @@ class MessageTextType(models.Model):
     content = models.TextField()
 
 
-# class MessageImageType(MessageContentBase, models.Model):
+# class MessageImageType(models.Model):
 #     content = models.ImageField(upload_to="media/%Y/%m/%d/")
