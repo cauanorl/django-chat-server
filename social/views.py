@@ -32,8 +32,10 @@ class CreateSolicitationInviteView(
     """
     Classe que envia a solicitação de amizade
     """
-    def post(self, request, friend_id, *args, **kwargs):
+    def post(self, request, *args, **kwargs):
         user = self.request.user
+        friend_id = self.request.POST.get('user_id')
+
         # Seleciona o usuário que receberá a solicitação
         other_user = get_object_or_404(User, id=friend_id)
 

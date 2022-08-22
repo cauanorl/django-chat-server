@@ -4,6 +4,8 @@
 
 {% block head %}
   <link rel="stylesheet" href="{% static "social/css/social.css" %}">
+
+  <title>Chat | Social</title>
 {% endblock %}
 
 {% block content %}
@@ -49,9 +51,9 @@
                 </div>
               </div>
               <div class="form-friend-request">
-                <form action="{% url "social:friend_request" user.id %}" method="post">
+                <form action="{% url "social:friend_request" %}" method="post" class="form-add-friend">
                   {% csrf_token %}
-                  <input type="submit" value="Enviar pedido de amizade">
+                  <input type="submit" value="Enviar pedido de amizade" class="input-add-friend" data-id="{{ user.id }}">
                 </form>
               </div>
             </li>
@@ -64,3 +66,7 @@
   </main>
   
 {% endblock content %}
+
+{% block dom_include %}
+  {% include "social/html_js/social_js.html" %}
+{% endblock %}

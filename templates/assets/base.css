@@ -202,6 +202,7 @@ div.link-animation {
   display: flex !important;
   align-items: center;
   padding: 1rem;
+  border-bottom: 1px solid var(--color-two) !important;
 }
 
 .img-friend-request-content {
@@ -214,7 +215,7 @@ div.link-animation {
 }
 
 .div-accept-or-refuse-friend {
-  margin-left: 10rem;
+  
 }
 
 .input-friend {
@@ -254,4 +255,8 @@ div.link-animation {
 
 .display-none {
   display: none !important;
+}
+
+.dropdown-item-friend-username {
+  width: 100%;
 }

@@ -26,8 +26,8 @@ function updateNewRequest() {
     if (friend_requests_info === 0) {
       $requests[0].classList.add('display-none')
     } else {
+      $requests[0].textContent = friend_requests_info
       $requests[0].classList.remove('display-none')
-      $requests[0] += friend_requests_info
     }
 
   })

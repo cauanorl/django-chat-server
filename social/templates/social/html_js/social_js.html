@@ -1,0 +1,23 @@
+<script>
+
+const $inputsAddFriend = document.querySelectorAll('.input-add-friend')
+
+$inputsAddFriend.forEach(function(html_actual) {
+  html_actual.addEventListener('click', function(e) {
+    e.preventDefault();
+    user_id = e.currentTarget.dataset.id
+    $.ajax({
+      type: "POST",
+      url: '{% url "social:friend_request" %}',
+      data: {
+        user_id: user_id,
+      }
+    }).done((response) => {
+      $('.form-add-friend')[0].innerHTML = "<span class='add-friend-ok'>Solicitação enviada</span>"
+    })
+  })
+})
+
+
+
+</script>
