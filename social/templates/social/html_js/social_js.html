@@ -3,6 +3,10 @@
 const $inputsAddFriend = document.querySelectorAll('.input-add-friend')
 
 $inputsAddFriend.forEach(function(html_actual) {
+  /*
+    Envia uma requisição AJAX para o server que envia uma solicitação de amizade
+    para o outro user
+  */
   html_actual.addEventListener('click', function(e) {
     e.preventDefault();
     user_id = e.currentTarget.dataset.id

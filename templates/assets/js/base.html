@@ -16,11 +16,18 @@ $.ajaxSetup({
 });
 
 function updateNewRequest() {
+  /* 
+    Muda com uma requisição AJAX as notificações que mostra quantas solicitações
+    de amizades não foram aceitas. Faz uma requisição na url social:count_request_view
+    e retorna a quantidade de amizades não aceitas para o user atual
+  */
   $.ajax({
     type: 'GET',
     url: "{% url 'social:count_request_view' %}",
   }).done((response) => {
+    // Reposta do server
     let friend_requests_info = response.user_friends_count
+    // O HTML que mostra a quantidade de pedidos
     const $requests = $(".badge.rounded-pill.badge-notification.bg-danger.requests")
 
     if (friend_requests_info === 0) {
@@ -34,6 +41,10 @@ function updateNewRequest() {
 }
 
 $navInputs.forEach(function(event) {
+  /*
+    Ajax que remove o HTML que mostra o usuário que envio a solicitação,
+    e o remove conforme a ação do usuário (aceitar ou recusar a amizade).
+  */
   event.addEventListener('click', function(e) {
     e.preventDefault();
     var currentTarget = e.currentTarget

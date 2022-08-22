@@ -13,7 +13,11 @@ Tasks
 >>> >>> Enviar tasks quando uma mensagem for enviada, para informar ao destinatário
         que chegou uma nova mensagem
 
->>> >>> permitir o envio de fotos e arquivos
+>>> >>> permitir o envio de fotos
+
+>>> >>> Adicionar páginação nos chats para evitar de carregar todas as mensagens
+        de uma vez (AJAX)
+
 
 >>> Mudar banco de dados para PostgreSQL
 
@@ -24,3 +28,8 @@ Tasks
 
 ||| Proximos passos ==>>>
 
+--> Adicionar os outros campos do Model Profile
+
+--> Página de criação de conta
+
+--> Página de Login

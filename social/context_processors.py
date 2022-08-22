@@ -1,4 +1,8 @@
 def actual_user_friend_requests(request, *args, **kwargs):
+    """
+    Retorna os users que não foram aceitos aindas e os que estão em
+    espera (Pedidos enviados pelo user atual).
+    """
     if not request.user.is_authenticated:
         return {}
 

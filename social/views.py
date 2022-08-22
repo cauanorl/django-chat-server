@@ -53,7 +53,8 @@ class CreateSolicitationInviteView(
         return HttpResponse('Ok')
 
 
-class ResponseFriendRequestViewAjax(AjaxRequiredMixin, TemplateResponseMixin, View):
+class ResponseFriendRequestViewAjax(
+        AjaxRequiredMixin, TemplateResponseMixin, View):
     """
     Classe que, quando o usuário clicar em aceitar um pedido de amizade ou
     recusar, fará o tratamento nescessário e fará uma ligação entre os dois
@@ -77,14 +78,16 @@ class ResponseFriendRequestViewAjax(AjaxRequiredMixin, TemplateResponseMixin, Vi
         return JsonResponse({'status': 'OK'})
 
 
-class UpdateNewFriendsRequest(View):
+class UpdateNewFriendsRequest(AjaxRequiredMixin, View):
     def get(self, request, *args, **kwargs):
         user = self.request.user
 
         if not user.is_authenticated:
             return None
 
-        user_friends = user.profile.friends.all()
-        user_friends = user_friends.filter(accept=None).exclude(user_one=user)
+        # Os usuários que ainda não foram aceitos ou recusados pelo user atual
+        user_friends = user.profile.friends.all() \
+                                   .filter(accept=None) \
+                                   .exclude(user_one=user)
 
         return JsonResponse({'user_friends_count': user_friends.count()})
