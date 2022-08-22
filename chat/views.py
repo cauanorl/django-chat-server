@@ -1,7 +1,6 @@
 from django.views.generic.base import TemplateView, View
 
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
 from django.contrib.contenttypes.models import ContentType
 
 from django.http import Http404, HttpResponseForbidden, JsonResponse
@@ -17,7 +16,8 @@ from .models import MessageTextType, Message
 class AjaxRequiredMixin(View):
     def dispatch(self, request, *args, **kwargs):
         # Salva na váriavel se a requisição é do tipo AJAX
-        is_ajax = self.request.headers.get('x-requested-with') == 'XMLHttpRequest'
+        is_ajax = self.request.headers.get(
+                        'x-requested-with') == 'XMLHttpRequest'
 
         # Se não for, entrega uma página 404
         if not is_ajax:
@@ -33,7 +33,8 @@ class ChatView(LoginRequiredMixin, TemplateView, View):
     template_name = "chat/room/room.html"
 
     def setup(self, request, *args, **kwargs):
-        self.all_friends = request.user.profile.friends.all()  # Todos os amigos
+        # Todos os amigos
+        self.all_friends = request.user.profile.friends.all()
 
         # Pedido de amizades enviados, aguardando serem aceitos ou recusados
         self.all_not_accepted = self.all_friends.filter(
@@ -72,7 +73,8 @@ class ChatListFriendsAjax(AjaxRequiredMixin, View):
     """
     def post(self, request, selected, *args, **kwargs):
 
-        all_friends = self.request.user.profile.friends.all()  # Todos os amigos
+        # Todos os amigos
+        all_friends = self.request.user.profile.friends.all()
 
         if selected == "all_friends":
             # Todas as amizades que foram aceitas
@@ -83,8 +85,10 @@ class ChatListFriendsAjax(AjaxRequiredMixin, View):
                 'selected': selected,
             })
 
-        requests_for_me = all_friends.filter(accept=None, user_two=request.user)
-        all_not_accepted = all_friends.filter(accept=None, user_one=request.user)
+        requests_for_me = all_friends.filter(
+            accept=None, user_two=request.user)
+        all_not_accepted = all_friends.filter(
+            accept=None, user_one=request.user)
 
         if selected == "friend_requests":
             return render(self.request, "chat/ajax_html/_list_requests.html", {
@@ -112,7 +116,7 @@ class ChatFriendAjax(AjaxRequiredMixin, View):
         # Verifica qual se é a amizade existe, se não, bloqueia a View
         if friend is None:
             return HttpResponseForbidden()
-        
+
         # Todas as mensagens salvas para carrega-las no Chat
         messages = friend_object.chat_messages.all()
 

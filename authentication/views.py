@@ -2,10 +2,8 @@ from django.shortcuts import redirect
 
 from django.contrib import auth
 from django.contrib.auth.views import LoginView
- 
 
 
-# Create your views here.
 class AuthLoginView(LoginView):
     template_name = "authentication/registration/login.html"
 

@@ -1,4 +1,5 @@
 {% load static %}
+{% load orl_filters %}
 
 <header id="navbar-header">
   <div class="main-container nav-content">
@@ -6,13 +7,13 @@
     <nav>
       <ul class="center-links">
         <li>
-          <a href="">
+          <a href="{% url "chat:chat" %}">
             Chats
           </a>
           <div class="link-animation"></div>
         </li>
         <li>
-          <a href="">
+          <a href="{% url "social:list_users" %}">
             Social
           </a>
           <div class="link-animation"></div>
@@ -28,8 +29,7 @@
     <div class="user-content">
       <div class="user-nav-links">
         <ul class="navbar-nav flex-row d-none d-md-flex">
-    
-          
+
           <li class="nav-item dropdown me-3 me-lg-1">
             <a
               class="nav-link dropdown-toggle hidden-arrow"
@@ -53,32 +53,89 @@
               data-mdb-toggle="dropdown"
               aria-expanded="false"
             >
-              <i class="fas fa-bell fa-2x"></i>
-              <span class="badge rounded-pill badge-notification bg-danger">12</span><br>
-              
+              <i class="fas fa-users fa-2x"></i>
+              {% if friend_requests %}
+                <span class="badge rounded-pill badge-notification bg-danger requests">{{ friend_requests.count }}</span><br>
+              {% endif %}
+
             </a>
             <ul
               class="dropdown-menu dropdown-menu-end"
               aria-labelledby="navbarDropdownMenuLink"
             >
-              <li>
-                <a class="dropdown-item" href="#">Some news</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Another news</a>
-              </li>
-              <li>
-                <a class="dropdown-item" href="#">Something else here</a>
-              </li>
+              {% for friend_request in friend_requests %}
+                <li class="friend_request-content user_{{ friend_request.id }}">
+                  <div class="dropdown-item" href="#">
+
+                    <div class="img-friend-request-content">
+                      <img
+                        src="{% static 'default_image/EU.jpg' %}"
+                        class="rounded-circle principal-user-img"
+                        alt="Black and White Portrait of a Man"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div>
+                      {{ friend_request|get_friend:request.user }}
+                    </div>
+                    
+                    <div class="div-accept-or-refuse-friend">
+                      {% if friend_request.user_one == request.user %}
+                        <div>
+                          <input type="submit" value="Aguardando resposta" id="input-wait-friend" class="input-friend">
+                        </div>
+                      {% else %}
+                        <form action="{% url "social:response_friend" %}" method="post">
+                          {% csrf_token %}
+                          <div>
+                            <input type="submit" value="accept" id="input-accept-friend" class="input-friend" name="friend_request_response" data-id="{{ friend_request.id }}">
+                          </div>
+                          <div>
+                            <input type="submit" value="refuse" id="input-refuse-friend" class="input-friend" name="friend_request_response" data-id="{{ friend_request.id }}">
+                          </div>
+                        </form>
+                      {% endif %}
+
+                    </div>
+                  </div>
+                </li>
+              {% endfor %}
+
+              {% for waiting_friend_request in waiting_friend_requests %}
+                <li class="friend_request-content">
+                  <div class="dropdown-item" href="#">
+
+                    <div class="img-friend-request-content">
+                      <img
+                        src="{% static 'default_image/EU.jpg' %}"
+                        class="rounded-circle principal-user-img"
+                        alt="Black and White Portrait of a Man"
+                        loading="lazy"
+                      />
+                    </div>
+                    <div>
+                      {{ waiting_friend_request|get_friend:request.user }}
+                    </div>
+
+                    <div class="div-accept-or-refuse-friend">
+                      <div>
+                        <input type="submit" value="Aguardando resposta" id="input-wait-friend" class="input-friend">
+                      </div>
+                    </div>
+                  </div>
+                </li>  
+              {% endfor %}
+
             </ul>
           </li>
-    
+
           <li class="nav-item me-3 me-lg-1">
             <a class="nav-link" href="#">
-              <span><i class="fas fa-users fa-2x"></i></span>
+              <span><i class="fas fa-bell fa-2x"></i></span>
               <span class="badge rounded-pill badge-notification bg-danger">2</span><br>
             </a>
           </li>
+
         </ul>
       </div>
       <div></div>

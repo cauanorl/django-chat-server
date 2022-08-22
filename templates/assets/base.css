@@ -191,3 +191,67 @@ div.link-animation {
     font-size: 43%;
   }
 }
+
+.badge.rounded-pill.badge-notification.bg-danger {
+  font-size: 1.3rem !important;
+}
+
+.dropdown-item {
+  cursor: default;
+  font-size: 2.3rem;
+  display: flex !important;
+  align-items: center;
+  padding: 1rem;
+}
+
+.img-friend-request-content {
+  width: 7rem;
+  margin-right: 1.6rem;
+}
+
+.img-friend-request-content img {
+  width: 100%;
+}
+
+.div-accept-or-refuse-friend {
+  margin-left: 10rem;
+}
+
+.input-friend {
+  border-radius: .8rem;
+  padding: .4rem 1rem;
+  font-size: 1.6rem;
+  width: 100%;
+  text-transform: capitalize;
+  border: .5px solid rgb(224, 224, 224);
+  color: white;
+}
+
+#input-refuse-friend {
+  background: rgb(255, 68, 68);
+}
+
+#input-refuse-friend:hover {
+  cursor: pointer;
+  background-color: rgb(255, 8, 8);
+}
+
+#input-accept-friend {
+  margin-bottom: .6rem;
+  background: rgb(19, 149, 255);
+}
+
+#input-accept-friend:hover {
+  cursor: pointer;
+  background: rgb(12, 77, 255);
+}
+
+#input-wait-friend {
+  cursor: default;
+  background: rgb(255, 255, 58);
+  color: rgb(53, 53, 53)
+}
+
+.display-none {
+  display: none !important;
+}

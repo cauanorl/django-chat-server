@@ -1,6 +1,5 @@
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, redirect
-from django.urls import reverse
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import get_object_or_404
 
 from django.contrib.auth.models import User
 
@@ -10,10 +9,9 @@ from django.views.generic.base import TemplateResponseMixin, View
 from django.contrib.auth.mixins import LoginRequiredMixin
 
 from authentication.models import Friend
-from chat.models import Message
+from chat.views import AjaxRequiredMixin
 
 
-# Create your views here.
 class UserListView(LoginRequiredMixin, ListView):
     template_name = "social/users/list.html"
     model = User
@@ -23,12 +21,14 @@ class UserListView(LoginRequiredMixin, ListView):
         qs = super().get_queryset(*args, **kwargs)
         # Exclui o usuário que enviou a solicitação e o próprio
         qs = qs.exclude(id=self.request.user.id) \
-               .exclude(profile__friends__user_one=self.request.user)
+               .exclude(profile__friends__user_one=self.request.user) \
+               .exclude(profile__friends__user_two=self.request.user)
 
         return qs
 
 
-class CreateSolicitationInviteView(LoginRequiredMixin, TemplateResponseMixin, View):
+class CreateSolicitationInviteView(
+            LoginRequiredMixin, TemplateResponseMixin, View):
     """
     Classe que envia a solicitação de amizade
     """
@@ -51,16 +51,20 @@ class CreateSolicitationInviteView(LoginRequiredMixin, TemplateResponseMixin, Vi
         return HttpResponse('Ok')
 
 
-class ResponseFriendRequestView(TemplateResponseMixin, View):
+class ResponseFriendRequestViewAjax(AjaxRequiredMixin, TemplateResponseMixin, View):
     """
-    Classe que, quando o usuário clicar em aceitar um pedido de amizade ou 
+    Classe que, quando o usuário clicar em aceitar um pedido de amizade ou
     recusar, fará o tratamento nescessário e fará uma ligação entre os dois
     usuários
     """
-    def post(self, request, model_friend_id, *args, **kwargs):
-        friend = get_object_or_404(Friend, id=model_friend_id)
+    def post(self, request, *args, **kwargs):
+        model_friend_id = self.request.POST.get("friend_model_id")
+
         # Recebe a resposta do pedido como "accept" ou "refuse"
-        response = self.request.POST.get('accept')  
+        response = self.request.POST.get('friend_response')
+
+        print(len(response))
+        friend = get_object_or_404(Friend, id=model_friend_id)
 
         if response == "accept":
             friend.accept = True  # Aceita o pedido
@@ -68,4 +72,17 @@ class ResponseFriendRequestView(TemplateResponseMixin, View):
         elif response == "refuse":
             friend.delete()  # Recusa o pedido
 
-        return redirect(reverse("chat:chat"))
+        return JsonResponse({'status': 'OK'})
+
+
+class UpdateNewFriendsRequest(View):
+    def get(self, request, *args, **kwargs):
+        user = self.request.user
+
+        if not user.is_authenticated:
+            return None
+
+        user_friends = user.profile.friends.all()
+        user_friends = user_friends.filter(accept=None).exclude(user_one=user)
+
+        return JsonResponse({'user_friends_count': user_friends.count()})

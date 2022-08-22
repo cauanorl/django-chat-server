@@ -1,0 +1,55 @@
+<script>
+
+const $navInputs = document.querySelectorAll('input.input-friend')
+
+let csrftoken = Cookies.get('csrftoken');
+function csrfSafeMethod(method) {
+  // Esses metodos não exigem proteção contra CSRF
+  return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+}
+$.ajaxSetup({
+  beforeSend: function(xhr, settings) {
+    if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+      xhr.setRequestHeader("X-CSRFToken", csrftoken)
+    }
+  }
+});
+
+function updateNewRequest() {
+  $.ajax({
+    type: 'GET',
+    url: "{% url 'social:count_request_view' %}",
+  }).done((response) => {
+    let friend_requests_info = response.user_friends_count
+    const $requests = $(".badge.rounded-pill.badge-notification.bg-danger.requests")
+
+    if (friend_requests_info === 0) {
+      $requests[0].classList.add('display-none')
+    } else {
+      $requests[0].classList.remove('display-none')
+      $requests[0] += friend_requests_info
+    }
+
+  })
+}
+
+$navInputs.forEach(function(event) {
+  event.addEventListener('click', function(e) {
+    e.preventDefault();
+    var currentTarget = e.currentTarget
+    $.ajax({
+      type: "POST",
+      url: "{% url 'social:response_friend' %}",
+      data: {
+        friend_response: currentTarget.value,
+        friend_model_id: currentTarget.dataset.id
+      }
+    }).done((response) => {
+      $(`.user_${currentTarget.dataset.id}`).remove()
+      updateNewRequest()
+    })
+  })
+})
+
+
+</script>

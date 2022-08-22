@@ -71,6 +71,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social.context_processors.actual_user_friend_requests',
             ],
         },
     },
