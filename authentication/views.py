@@ -1,5 +1,5 @@
 from django.shortcuts import redirect
-from django.urls import reverse
+from django.urls import reverse, reverse_lazy
 
 from django.contrib import auth
 from django.contrib.auth.views import LoginView
@@ -7,6 +7,7 @@ from django.contrib.auth.views import LoginView
 
 class AuthLoginView(LoginView):
     template_name = "authentication/registration/login.html"
+    next_page = reverse_lazy('social:list_users')
 
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:

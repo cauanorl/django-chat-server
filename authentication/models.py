@@ -45,7 +45,8 @@ class Friend(models.Model):
 
 
 class Profile(models.Model):
-    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="profile")
+    user = models.OneToOneField(
+            User, on_delete=models.CASCADE, related_name="profile")
 
     # A lista de amigos
     friends = models.ManyToManyField(Friend, blank=True, db_index=True)

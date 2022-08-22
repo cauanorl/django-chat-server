@@ -197,6 +197,7 @@ div.link-animation {
 }
 
 .dropdown-item {
+  min-height: 7rem;
   cursor: default;
   font-size: 2.3rem;
   display: flex !important;
@@ -206,16 +207,12 @@ div.link-animation {
 }
 
 .img-friend-request-content {
-  width: 7rem;
+  width: 10rem;
   margin-right: 1.6rem;
 }
 
 .img-friend-request-content img {
   width: 100%;
-}
-
-.div-accept-or-refuse-friend {
-  
 }
 
 .input-friend {
@@ -259,4 +256,5 @@ div.link-animation {
 
 .dropdown-item-friend-username {
   width: 100%;
+
 }

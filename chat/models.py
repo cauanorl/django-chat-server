@@ -13,7 +13,8 @@ class Message(models.Model):
     """
     O model que salva as mensagens enviadas no chat
     """
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True)
+    owner = models.ForeignKey(
+                    User, on_delete=models.CASCADE, blank=True, null=True)
     created = models.DateTimeField(auto_now=True)
     # Mesagens
     friend_model = models.ForeignKey(
@@ -31,11 +32,12 @@ class Message(models.Model):
         on_delete=models.CASCADE,
         related_name='target_obj',
     )
-    target_id = models.PositiveIntegerField(null=True, blank=True, db_index=True)
+    target_id = models.PositiveIntegerField(
+                    null=True, blank=True, db_index=True)
     target = GenericForeignKey('target_ct', 'target_id')
 
     def get_message_content(self):
-        """ 
+        """
         Metodo que retornará o conteudo da mensagem
         """
         model = self.target_ct.model_class()  # O model que controla o conteudo

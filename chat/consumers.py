@@ -1,6 +1,4 @@
 from channels.generic.websocket import AsyncWebsocketConsumer
-from django.contrib.auth.models import User
-from . import models
 
 import json
 import re
@@ -35,8 +33,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
     async def receive(self, text_data, bytes_data=None):
         json_data = json.loads(text_data)
         message = json_data.get('message')
-        message = re.sub(r'<[^>]+?>', '', message)  # Remove as tag HTML das mensagens
-        
+        # Remove as tag HTML das mensagens
+        message = re.sub(r'<[^>]+?>', '', message)
 
         # Enviando mensagem para o grupo que foi criado
         await self.channel_layer.group_send(

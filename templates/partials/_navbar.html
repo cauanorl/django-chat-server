@@ -80,23 +80,17 @@
                     </div>
                     
                     <div class="div-accept-or-refuse-friend">
-                      {% if friend_request.user_one == request.user %}
+                      <form action="{% url "social:response_friend" %}" method="post">
+                        {% csrf_token %}
                         <div>
-                          <input type="submit" value="Aguardando resposta" id="input-wait-friend" class="input-friend">
+                          <input type="submit" value="accept" id="input-accept-friend" class="input-friend" name="friend_request_response" data-id="{{ friend_request.id }}">
                         </div>
-                      {% else %}
-                        <form action="{% url "social:response_friend" %}" method="post">
-                          {% csrf_token %}
-                          <div>
-                            <input type="submit" value="accept" id="input-accept-friend" class="input-friend" name="friend_request_response" data-id="{{ friend_request.id }}">
-                          </div>
-                          <div>
-                            <input type="submit" value="refuse" id="input-refuse-friend" class="input-friend" name="friend_request_response" data-id="{{ friend_request.id }}">
-                          </div>
-                        </form>
-                      {% endif %}
-
+                        <div>
+                          <input type="submit" value="refuse" id="input-refuse-friend" class="input-friend" name="friend_request_response" data-id="{{ friend_request.id }}">
+                        </div>
+                      </form>
                     </div>
+
                   </div>
                 </li>
               {% endfor %}
@@ -113,7 +107,7 @@
                         loading="lazy"
                       />
                     </div>
-                    <div>
+                    <div class="dropdown-item-friend-username">
                       {{ waiting_friend_request|get_friend:request.user }}
                     </div>
 
