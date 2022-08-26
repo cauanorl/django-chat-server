@@ -1,13 +1,35 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block head %}
   <title>Chat | Login</title>
+  <link rel="stylesheet" href="{% static "authentication/css/login.css" %}">
 {% endblock %}
 
 {% block content %}
-  <form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <p><input type="submit" value="Entrar"></p>
-  </form>
+  <main class="container-login">
+    <div class="login">
+      <div class="chat-header">
+        <h1>Entrar</h1>
+      </div>
+      <div class="form-content">
+        <form method="post">
+          {% csrf_token %}
+          {% for field in form %}
+            <div class="{% if field.errors %}error{% endif %}">
+              {{ field }}
+              {{ field.errors }}
+            </div>
+          {% endfor %}
+          <hr>
+          <div class="submit-div">
+            <input type="submit" value="Entrar">
+          </div>
+        </form>
+        <div class="create-profile-div">
+          <p>Não tem uma conta? <a href="">Crie uma aqui</a></p>
+        </div>
+      </div>
+    </div>
+  </main>
 {% endblock %}
