@@ -46,7 +46,18 @@ class Friend(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(
-            User, on_delete=models.CASCADE, related_name="profile")
+            User,
+            on_delete=models.CASCADE,
+            related_name="profile")
+
+    about_me = models.TextField(
+        blank=True,
+        null=True,
+        max_length=500)
+
+    photo = models.ImageField(
+        upload_to="%Y/%m/%d/",
+        blank=True)
 
     # A lista de amigos
     friends = models.ManyToManyField(Friend, blank=True, db_index=True)

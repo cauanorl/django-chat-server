@@ -6,10 +6,14 @@
 <div class="chat-header">
   <div class="chat-user-image">
     <img
-    src="{% static 'default_image/no_image.png' %}"
-    class="rounded-circle user_img"
-    alt="Foto de usuário"
-    loading="lazy"
+      {% if not friend.profile.photo %}
+        src="{% static 'default_image/no_image.png' %}"
+      {% else %}
+        src="{{ friend.profile.photo.url }}"
+      {% endif %}
+      class="rounded-circle user_img"
+      alt="Foto de usuário"
+      loading="lazy"
     />
   </div>
   <div class="chat-user-info">

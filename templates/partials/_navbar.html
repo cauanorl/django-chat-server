@@ -134,12 +134,18 @@
       </div>
       <div></div>
       <div class="nav-img-content">
-        <img
-          src="{% static 'default_image/EU.jpg' %}"
-          class="rounded-circle principal-user-img"
-          alt="Black and White Portrait of a Man"
-          loading="lazy"
-        />
+        {% with user_profile=request.user.profile %}
+          <img
+            {% if not user_profile.photo %}
+              src="{% static 'default_image/no_image.png' %}"
+            {% else %}
+              src="{{ user_profile.photo.url }}"
+            {% endif %}
+            class="rounded-circle principal-user-img"
+            alt="Black and White Portrait of a Man"
+            loading="lazy"
+          />
+        {% endwith %}
       </div>
     </div>
   </div>

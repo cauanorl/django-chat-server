@@ -2,18 +2,19 @@
 {% load static %}
 
 {% block head %}
-  <title>Chat | Login</title>
+  <title>Criar um conta</title>
   <link rel="stylesheet" href="{% static "authentication/css/login.css" %}">
-{% endblock %}
+{% endblock head %}
+
 
 {% block content %}
   <main class="container-login">
     <div class="login">
       <div class="chat-header">
-        <h1>Entrar</h1>
+        <h1>Criar conta</h1>
       </div>
       <div class="form-content">
-        <form method="post">
+        <form method="post" enctype="multipart/form-data">
           {% csrf_token %}
           {% for field in form %}
             <div class="{% if field.errors %}error{% endif %}">
@@ -23,11 +24,11 @@
           {% endfor %}
           <hr>
           <div class="submit-div">
-            <input type="submit" value="Entrar">
+            <input type="submit" value="Criar">
           </div>
         </form>
         <div class="create-profile-div">
-          <p>Não tem uma conta? <a href="{% url "authentication:registration" %}">Crie uma aqui</a></p>
+          <p>Já tem uma conta? <a href="{% url "authentication:login" %}">Faça login aqui</a></p>
         </div>
       </div>
     </div>

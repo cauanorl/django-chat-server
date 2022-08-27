@@ -1,5 +1,6 @@
 {% extends "base.html" %}
 {% load static %}
+{% load orl_filters %}
 
 {% block head %}
 
@@ -34,7 +35,13 @@
                 <a href="">
                   <div class="friend-img-content">
                     <img
-                      src="{% static 'default_image/no_image.png' %}"
+                      {% with friend=my_friend|get_friend:request.user %}
+                        {% if not friend.profile.photo %}
+                          src="{% static 'default_image/no_image.png' %}"
+                        {% else %}
+                          src="{{ friend.profile.photo.url }}"
+                        {% endif %}
+                      {% endwith %}
                       class="rounded-circle user_img"
                       alt="Foto de usuário"
                       loading="lazy"

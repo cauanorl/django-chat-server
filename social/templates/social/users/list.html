@@ -15,15 +15,21 @@
 
     <div class="user-profile-details">
       <div class="perfil-image-content">
-        <img src="{% static "default_image/EU.jpg" %}" alt="" class="rounded-circle">
+        <img
+          {% with request.user.profile as user_profile %}
+            {% if not user_profile.photo %}
+              src="{% static 'default_image/no_image.png' %}"
+            {% else %}
+              src="{{ user_profile.photo.url }}"
+            {% endif %}
+          {% endwith %}
+          alt="" class="rounded-circle"
+        >
       </div>
       <div class="div-separator"></div>
       <div class="user-info">
         <div class="info">
           <span class="default-text">Username:</span> <span>{{ request.user.username }}</span>
-        </div>
-        <div class="info">
-          <span class="default-text">Idade:</span> <span>18</span>
         </div>
       </div>
       <div class="div-separator"></div>
@@ -43,7 +49,15 @@
           {% for user in users %}
             <li class="add-user">
               <div class="user-image-content">
-                <img src="{% static "default_image/EU.jpg" %}" alt="" class="rounded-circle">
+                <img
+                  {% if not user.profile.photo %}
+                    src="{% static "default_image/no_image.png" %}"
+                  {% else %}
+                    src="{{ user.profile.photo.url }}"
+                  {% endif %}
+                  alt=""
+                  class="rounded-circle"
+                >
               </div>
               <div class="friend-user-info">
                 <div>

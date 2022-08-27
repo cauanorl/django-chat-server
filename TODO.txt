@@ -5,10 +5,6 @@ Tasks
 >>> >>> Model Friend (Encontrar uma forma de melhorar o model para evitar fazer
                       Multiplas requisições.)
 
->>> Criar página de Login
->>> >>> (Ainda pensando em como faze-la)
-
-
 >>> Chat
 >>> >>> Enviar tasks quando uma mensagem for enviada, para informar ao destinatário
         que chegou uma nova mensagem
@@ -24,12 +20,21 @@ Tasks
 
 ||--==??? Bugs to fix ???--==||
 
+*** Arrumar as imagens
+        -> Quando a imagem ta muito pequena ou muito alta, ela quebra o estilo
+           e fica deformada
+
+
 *** Reduzir e melhorar a performace das consultas ao banco de dados
 
 ||| Proximos passos ==>>>
 
---> Adicionar os outros campos do Model Profile
+--> Estilização das páginas: Cadastro
 
---> Página de criação de conta
+--> Responsividade de todas as páginas
 
---> Página de Login
+--> Botão de Logout (Na navbar)
+
+--> Página para alterar as informações do usuário
+
+--> Javascript para controlar a responsividade da navbar
