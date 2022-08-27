@@ -1,10 +1,5 @@
 Tasks
 
->>> Criar uma página para cadastro de usuário
->>> >>> Model Profile (Melhorar)
->>> >>> Model Friend (Encontrar uma forma de melhorar o model para evitar fazer
-                      Multiplas requisições.)
-
 >>> Chat
 >>> >>> Enviar um aviso quando uma mensagem for enviada, para informar ao 
         destinatário que chegou uma nova mensagem
@@ -20,10 +15,9 @@ Tasks
 
 ||--==??? Bugs to fix ???--==||
 
-
-
-
 *** Reduzir e melhorar a performace das consultas ao banco de dados
+
+
 
 ||| Proximos passos ==>>>
 

@@ -147,7 +147,7 @@ div.link-animation {
 
 @media all and (max-width: 1200px) {
   :root {
-    font-size: 50%;
+    font-size: 45%;
   }
   .form-search-chat input {
     height: 3rem;
@@ -161,24 +161,41 @@ div.link-animation {
 
 @media all and (max-width: 1000px) {
   :root {
-    font-size: 50%;
+    font-size: 40%;
+  }
+
+  .friends-list-header {
+    max-height: 13%;
+  }
+
+  ul.friends-list {
+    height: 87%
   }
 }
 
 @media all and (max-height: 890px) {
   :root {
-    font-size: 45%;
+    font-size: 35%;
   }
+
 }
 
 
 @media all and (max-width: 900px) and (max-height: 890px) {
   :root {
-    font-size: 45%;
+    font-size: 32%;
   }
 
   .friends-list-header h1 {
     font-size: 2.4rem;
+  }
+  
+  .friends-list-header {
+    max-height: 10%;
+  }
+
+  ul.friends-list {
+    height: 90%
   }
 
   div.search-separator {
@@ -188,7 +205,7 @@ div.link-animation {
 
 @media all and (max-width: 800px) and (max-height: 890px) {
   :root {
-    font-size: 43%;
+    font-size: 33%;
   }
 }
 
