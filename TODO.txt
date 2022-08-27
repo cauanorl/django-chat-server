@@ -6,10 +6,10 @@ Tasks
                       Multiplas requisições.)
 
 >>> Chat
->>> >>> Enviar tasks quando uma mensagem for enviada, para informar ao destinatário
-        que chegou uma nova mensagem
+>>> >>> Enviar um aviso quando uma mensagem for enviada, para informar ao 
+        destinatário que chegou uma nova mensagem
 
->>> >>> permitir o envio de fotos
+>>> >>> Permitir o envio de fotos
 
 >>> >>> Adicionar páginação nos chats para evitar de carregar todas as mensagens
         de uma vez (AJAX)

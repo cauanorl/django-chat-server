@@ -38,6 +38,20 @@ class LoginForm(forms.Form):
 
 
 class CreateAccountForm(forms.ModelForm):
+    """
+        Form que cria uma conta.
+        Validações feitas até agora:
+            Username:
+                Tem que ser unico
+                Tem que ter mais de 5 caracteres
+            Password:
+                Tem que ter mais de 7 caracteres e menos que 50
+                Tem que condizer com a senha do campo "repeat_password"
+        Campos obrigatórios:
+            username
+            password
+            repeat_password
+    """
     class Meta:
         model = Profile
         fields = ['username', 'password',

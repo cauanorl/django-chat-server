@@ -12,7 +12,10 @@ from .forms import LoginForm, CreateAccountForm
 
 
 class LoginIsNotRequiredMixin(TemplateView, View):
-
+    """
+        Mixin que, quando o usuário já estiver logado,
+        o manda para a página "social:list_users"
+    """
     def dispatch(self, request, *args, **kwargs):
         if request.user.is_authenticated:
             return redirect(reverse('social:list_users'))
@@ -57,6 +60,7 @@ class RegistrationView(LoginIsNotRequiredMixin):
         form = CreateAccountForm(self.request.POST)
 
         if form.is_valid():
+            # Função que cria uma conta e faz login.
             self.create_and_login_user(form, self.request)
 
             return redirect(reverse('social:list_users'))
@@ -67,11 +71,14 @@ class RegistrationView(LoginIsNotRequiredMixin):
             self, form: CreateAccountForm, request: HttpRequest):
         username = request.POST.get('username')
         password = request.POST.get('password')
+        # A foto que foi escolhida no form
         photo = request.FILES.get('photo')
         profile = form.save(commit=False)
 
+        # Cria o user
         user = User.objects.create_user(
                     username=username, password=password)
+        # Define o dono do objeto Profile
         profile.user = user
         profile.photo = photo
         profile.save()

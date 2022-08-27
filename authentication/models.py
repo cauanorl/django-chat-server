@@ -50,11 +50,13 @@ class Profile(models.Model):
             on_delete=models.CASCADE,
             related_name="profile")
 
+    # Uma descrição opcional do usuário
     about_me = models.TextField(
         blank=True,
         null=True,
         max_length=500)
 
+    # Foto de perfil do User
     photo = models.ImageField(
         upload_to="%Y/%m/%d/",
         blank=True)
