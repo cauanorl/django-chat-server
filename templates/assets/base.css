@@ -171,10 +171,6 @@ div.link-animation {
     height: 90% !important;
   }
 
-  div.about-me {
-    font-size: 2rem;
-  }
-
   .send-files {
     width: 10% !important;
   }
@@ -187,8 +183,9 @@ div.link-animation {
 @media all and (max-height: 800px) {
   main.main-container,
   .content-users-list,
-  .user-profile-details {
-    margin-top: 1rem !important;
+  .user-profile-details,
+  .main-container.social{
+    margin-top: .6rem !important;
   }
 
   .friends-list-header {
@@ -201,6 +198,10 @@ div.link-animation {
 
   .user_img {
     min-height: 7rem !important;
+  }
+
+  div.about-me {
+    font-size: 2rem;
   }
 
 }
