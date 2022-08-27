@@ -20,9 +20,7 @@ Tasks
 
 ||--==??? Bugs to fix ???--==||
 
-*** Arrumar as imagens
-        -> Quando a imagem ta muito pequena ou muito alta, ela quebra o estilo
-           e fica deformada
+
 
 
 *** Reduzir e melhorar a performace das consultas ao banco de dados

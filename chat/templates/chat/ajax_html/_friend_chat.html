@@ -1,5 +1,6 @@
 {% load static %}
 {% load humanize %}
+{% load thumbnail %}
 
 
 
@@ -9,7 +10,7 @@
       {% if not friend.profile.photo %}
         src="{% static 'default_image/no_image.png' %}"
       {% else %}
-        src="{{ friend.profile.photo.url }}"
+        src="{%  thumbnail friend.profile.photo 300x300 crop=300 %}"
       {% endif %}
       class="rounded-circle user_img"
       alt="Foto de usuário"

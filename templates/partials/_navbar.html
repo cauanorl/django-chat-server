@@ -1,5 +1,6 @@
 {% load static %}
 {% load orl_filters %}
+{% load thumbnail %}
 
 <header id="navbar-header">
   <div class="main-container nav-content">
@@ -65,58 +66,70 @@
             >
               {% for friend_request in friend_requests %}
                 <li class="friend_request-content user_{{ friend_request.id }}">
-                  <div class="dropdown-item" href="#">
+                  {% with friend_request_user=friend_request|get_friend:request.user %}
+                    <div class="dropdown-item" href="#">
 
-                    <div class="img-friend-request-content">
-                      <img
-                        src="{% static 'default_image/EU.jpg' %}"
-                        class="rounded-circle principal-user-img"
-                        alt="Black and White Portrait of a Man"
-                        loading="lazy"
-                      />
-                    </div>
-                    <div class="dropdown-item-friend-username">
-                      {{ friend_request|get_friend:request.user }}
-                    </div>
-                    
-                    <div class="div-accept-or-refuse-friend">
-                      <form action="{% url "social:response_friend" %}" method="post">
-                        {% csrf_token %}
-                        <div>
-                          <input type="submit" value="accept" id="input-accept-friend" class="input-friend" name="friend_request_response" data-id="{{ friend_request.id }}">
-                        </div>
-                        <div>
-                          <input type="submit" value="refuse" id="input-refuse-friend" class="input-friend" name="friend_request_response" data-id="{{ friend_request.id }}">
-                        </div>
-                      </form>
-                    </div>
+                      <div class="img-friend-request-content">
+                        <img
+                          {% if not friend_request_user.profile.photo %}
+                            src="{% static 'default_image/EU.jpg' %}"
+                          {% else %}
+                            src="{% thumbnail friend_request_user.profile.photo 300x300 crop=300 %}"
+                          {% endif %}
+                          class="rounded-circle principal-user-img"
+                          alt="Black and White Portrait of a Man"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div class="dropdown-item-friend-username">
+                        {{ friend_request_user }}
+                      </div>
+                      
+                      <div class="div-accept-or-refuse-friend">
+                        <form action="{% url "social:response_friend" %}" method="post">
+                          {% csrf_token %}
+                          <div>
+                            <input type="submit" value="accept" id="input-accept-friend" class="input-friend" name="friend_request_response" data-id="{{ friend_request.id }}">
+                          </div>
+                          <div>
+                            <input type="submit" value="refuse" id="input-refuse-friend" class="input-friend" name="friend_request_response" data-id="{{ friend_request.id }}">
+                          </div>
+                        </form>
+                      </div>
 
-                  </div>
+                    </div>
+                  {% endwith %}
                 </li>
               {% endfor %}
 
               {% for waiting_friend_request in waiting_friend_requests %}
                 <li class="friend_request-content">
-                  <div class="dropdown-item" href="#">
+                  {% with wait_friend=waiting_friend_request|get_friend:request.user %}
+                    <div class="dropdown-item" href="#">
 
-                    <div class="img-friend-request-content">
-                      <img
-                        src="{% static 'default_image/EU.jpg' %}"
-                        class="rounded-circle principal-user-img"
-                        alt="Black and White Portrait of a Man"
-                        loading="lazy"
-                      />
-                    </div>
-                    <div class="dropdown-item-friend-username">
-                      {{ waiting_friend_request|get_friend:request.user }}
-                    </div>
+                      <div class="img-friend-request-content">
+                        <img
+                          {% if not wait_friend.profile.photo %}
+                            src="{% static 'default_image/EU.jpg' %}"
+                          {% else %}
+                            src="{% thumbnail wait_friend.profile.photo 300x300 crop=300 %}"
+                          {% endif %}
+                          class="rounded-circle principal-user-img"
+                          alt="Black and White Portrait of a Man"
+                          loading="lazy"
+                        />
+                      </div>
+                      <div class="dropdown-item-friend-username">
+                        {{ wait_friend }}
+                      </div>
 
-                    <div class="div-accept-or-refuse-friend">
-                      <div>
-                        <input type="submit" value="Aguardando resposta" id="input-wait-friend" class="input-friend">
+                      <div class="div-accept-or-refuse-friend">
+                        <div>
+                          <input type="submit" value="Aguardando resposta" id="input-wait-friend" class="input-friend">
+                        </div>
                       </div>
                     </div>
-                  </div>
+                  {% endwith %}
                 </li>  
               {% endfor %}
 
@@ -139,7 +152,7 @@
             {% if not user_profile.photo %}
               src="{% static 'default_image/no_image.png' %}"
             {% else %}
-              src="{{ user_profile.photo.url }}"
+              src="{% thumbnail user_profile.photo 50x50 crop=300 %}"
             {% endif %}
             class="rounded-circle principal-user-img"
             alt="Black and White Portrait of a Man"

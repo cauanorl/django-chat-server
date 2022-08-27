@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,7 +26,7 @@ SECRET_KEY = 'django-insecure-oy!58_ttn8&3jvex1%t&%q%lumnnap2vcbf@b==+v2v_d^v7#u
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS: list = []
 
 
 # Application definition
@@ -43,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.humanize',
 
+    'easy_thumbnails',
     'channels',
 ]
 
@@ -155,6 +157,5 @@ CHANNEL_LAYERS = {
 }
 
 
-from django.urls import reverse_lazy
 
 LOGIN_URL = reverse_lazy('authentication:login')

@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% load static %}
 {% load orl_filters %}
+{% load thumbnail %}
 
 {% block head %}
 
@@ -39,7 +40,7 @@
                         {% if not friend.profile.photo %}
                           src="{% static 'default_image/no_image.png' %}"
                         {% else %}
-                          src="{{ friend.profile.photo.url }}"
+                          src="{%  thumbnail friend.profile.photo 300x300 crop=300 %}"
                         {% endif %}
                       {% endwith %}
                       class="rounded-circle user_img"
