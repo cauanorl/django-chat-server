@@ -87,6 +87,23 @@
     cursor: not-allowed;
   }
 
+  .form-content textarea {
+    min-width: 100%;
+    max-width: 100%;
+    max-height: 25rem;
+    min-height: 25rem;
+
+    padding: 1rem 1.5rem;
+    border-radius: 2rem;
+    border: 1px solid var(--color-two);
+    transition: all 200ms ease-in-out;
+    outline: none;
+  }
+
+  .form-content textarea:focus {
+    border: 1px solid var(--color-four);
+  }
+
   .create-profile-div {
     text-align: center;
     margin: 1.4rem auto .3rem;

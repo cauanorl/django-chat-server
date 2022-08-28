@@ -74,6 +74,11 @@ class UserAndProfileAbstractForm(forms.ModelForm):
                     widget=forms.PasswordInput(
                             attrs={'placeholder': 'Confirmar senha...'}))
 
+    about_me = forms.CharField(
+                    max_length=500,
+                    required=False,
+                    widget=forms.Textarea({'placeholder': 'Sobre mim...'}))
+
     def clean_password(self, *args, **kwargs):
         password = self.cleaned_data.get('password')
 
