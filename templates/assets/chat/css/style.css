@@ -228,6 +228,7 @@ Mensagens
 
 /* Other message style */
 .msg_cotainer {
+  word-break: break-all;
   background-color: rgb(240, 240, 240);
   margin-left: 2rem;
 
@@ -251,6 +252,7 @@ Mensagens
 
 /* User message style */
 .msg_cotainer_send {
+  word-break: break-all;
   font-weight: 400;
   color: rgb(230, 230, 230);
   background-color: rgb(27, 145, 255);

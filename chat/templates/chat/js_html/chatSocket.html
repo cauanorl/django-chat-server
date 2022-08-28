@@ -114,7 +114,9 @@ const Main = {
         this.$chatMessage.innerHTML += `
           <div class="d-flex justify-content-start mb-4">
             <div class="msg_cotainer">
-              ${message.textContent}
+              <p>
+                ${message.textContent}
+              </p>
               <span class="msg_time">Now</span>
             </div>
           </div>
@@ -124,7 +126,9 @@ const Main = {
         this.$chatMessage.innerHTML += `
           <div class="d-flex justify-content-end mb-4">
             <div class="msg_cotainer_send">
-              ${message.textContent}
+              <p>
+                ${message.textContent}
+              </p>
               <span class="msg_time_send">Now</span>
             </div>
           </div>
