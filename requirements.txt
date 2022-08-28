@@ -5,18 +5,19 @@ attrs==21.4.0
 autobahn==22.6.1
 Automat==20.2.0
 cffi==1.15.1
-channels==3.0.5
+channels==3.0.5  # Este
 channels-redis==3.4.1
 constantly==15.1.0
 cryptography==37.0.4
 daphne==3.0.2
-Django==4.0.6
+Django==4.0.6  # Este
+easy-thumbnails==2.8.3  # Este
 hiredis==2.0.0
 hyperlink==21.0.0
 idna==3.3
 incremental==21.3.0
 msgpack==1.0.4
-Pillow==9.2.0
+Pillow==9.2.0  # Este
 pyasn1==0.4.8
 pyasn1-modules==0.2.8
 pycparser==2.21

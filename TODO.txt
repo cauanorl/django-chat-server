@@ -17,16 +17,15 @@ Tasks
 
 *** Reduzir e melhorar a performace das consultas ao banco de dados
 
+** Na página de atualização do perfil do usuário, verificar se os dados
+   enviados são os mesmos que o anterior para evitar de ficar mandando
+   requisições para o servidor
+
+*** Ser possivel cancelar uma solicitação de amizade após envia-la
 
 
 ||| Proximos passos ==>>>
 
---> Estilização das páginas: Cadastro
-
 --> Responsividade de todas as páginas
-
---> Botão de Logout (Na navbar)
-
---> Página para alterar as informações do usuário
 
 --> Javascript para controlar a responsividade da navbar
