@@ -1,3 +1,4 @@
+
 from django import forms
 from django.contrib import auth
 from django.contrib.auth.models import User
@@ -37,7 +38,7 @@ class LoginForm(forms.Form):
         return super().clean()
 
 
-class CreateAccountForm(forms.ModelForm):
+class UserAndProfileAbstractForm(forms.ModelForm):
     """
         Form que cria uma conta.
         Validações feitas até agora:
@@ -53,6 +54,7 @@ class CreateAccountForm(forms.ModelForm):
             repeat_password
     """
     class Meta:
+        abstract = True
         model = Profile
         fields = ['username', 'password',
                   'repeat_password', 'about_me', 'photo']
@@ -60,21 +62,17 @@ class CreateAccountForm(forms.ModelForm):
     username = forms.CharField(
                     max_length=30,
                     widget=forms.TextInput(
-                                attrs={
-                                        'placeholder': 'Nome de usuário...'
-                                    }))
+                            attrs={'placeholder': 'Nome de usuário...'}))
 
     password = forms.CharField(
                     max_length=50,
                     widget=forms.PasswordInput(
-                                attrs={'placeholder': 'Senha...'}))
+                            attrs={'placeholder': 'Senha...'}))
 
     repeat_password = forms.CharField(
                     max_length=50,
                     widget=forms.PasswordInput(
-                                attrs={
-                                        'placeholder': 'Confirmar senha...'
-                                    }))
+                            attrs={'placeholder': 'Confirmar senha...'}))
 
     def clean_password(self, *args, **kwargs):
         password = self.cleaned_data.get('password')
@@ -122,3 +120,55 @@ class CreateAccountForm(forms.ModelForm):
                     'Nome de usuário não pode ter menos que 6 caracteres.'))
 
         return username
+
+
+class CreateAccountForm(UserAndProfileAbstractForm):
+    ...
+
+
+class UpdateAccountForm(UserAndProfileAbstractForm):
+    class Meta:
+        model = Profile
+        fields = ['username', 'password', 'repeat_password',
+                  'about_me', 'photo']
+
+    username = forms.CharField(
+                    max_length=30,
+                    required=False,
+                    widget=forms.TextInput(
+                            attrs={
+                                'placeholder': 'Nome de usuário...',
+                                'disabled': True,
+                            }))
+
+    password = forms.CharField(
+                    max_length=50,
+                    required=False,
+                    widget=forms.PasswordInput(
+                            attrs={'placeholder': 'Mudar senha...'}))
+
+    repeat_password = forms.CharField(
+                    max_length=50,
+                    required=False,
+                    widget=forms.PasswordInput(
+                            attrs={'placeholder': 'Confirmar senha...'}))
+
+    def clean_username(self, *args, **kwargs):
+        return False
+
+    def clean_repeat_password(self, *args, **kwargs):
+        repeat_password = self.cleaned_data.get('repeat_password')
+        password = self.cleaned_data.get('password')
+
+        if not repeat_password and not password:
+            return False
+
+        return super().clean_repeat_password(*args, **kwargs)
+
+    def clean_password(self, *args, **kwargs):
+        password = self.cleaned_data.get('password')
+
+        if not password:
+            return None
+
+        return super().clean_password(*args, **kwargs)

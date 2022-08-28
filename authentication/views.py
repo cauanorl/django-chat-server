@@ -1,14 +1,23 @@
 from django.http import HttpRequest
 
+from django.forms import TextInput
+
 from django.shortcuts import redirect
+
 from django.urls import reverse
 
 from django.contrib import auth
 from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
+
+from django.contrib import messages
 
 from django.views.generic.base import TemplateView, View
 
-from .forms import LoginForm, CreateAccountForm
+from .forms import (
+    LoginForm, CreateAccountForm,
+    UpdateAccountForm, UserAndProfileAbstractForm)
+from authentication.models import Profile
 
 
 class LoginIsNotRequiredMixin(TemplateView, View):
@@ -68,7 +77,7 @@ class RegistrationView(LoginIsNotRequiredMixin):
         return self.render_to_response({'form': form})
 
     def create_and_login_user(
-            self, form: CreateAccountForm, request: HttpRequest):
+            self, form: UserAndProfileAbstractForm, request: HttpRequest):
         username = request.POST.get('username')
         password = request.POST.get('password')
         # A foto que foi escolhida no form
@@ -87,6 +96,65 @@ class RegistrationView(LoginIsNotRequiredMixin):
             request, username=username, password=password)
 
         auth.login(request, user)
+
+
+class EditProfile(LoginRequiredMixin, TemplateView, View):
+    template_name = "authentication/registration/update_account.html"
+
+    def dispatch(self, *args, **kwargs):
+        if not self.request.user.is_authenticated:
+            return super().dispatch(*args, **kwargs)
+
+        self.user = self.request.user
+        self.form = UpdateAccountForm(instance=self.request.user.profile)
+
+        return super().dispatch(*args, **kwargs)
+
+    def get(self, *args, **kwargs):
+        self.config_field_username()
+
+        return self.render_to_response({'form': self.form})
+
+    def post(self, *args, **kwargs):
+        self.form = UpdateAccountForm(data=self.request.POST)
+        self.config_field_username()
+
+        if self.form.is_valid():
+            username = self.user.username
+            password = self.form.cleaned_data.get('password')
+
+            if password:
+                self.set_password_and_login(username, password)
+
+            self.update_profile()
+            messages.success(self.request, "Configurações salvas com sucesso!")
+
+        return self.render_to_response({'form': self.form})
+
+    def set_password_and_login(self, username, password):
+        self.user.set_password(password)
+        self.user.save()
+
+        user = auth.authenticate(
+            username=username, password=password)
+        auth.login(self.request, user)
+
+    def update_profile(self, *args, **kwargs):
+        about_me = self.form.cleaned_data.get('about_me')
+        photo = self.request.FILES.get('photo')
+
+        profile = Profile.objects.get(id=self.user.profile.id)
+        if photo:
+            profile.photo = photo
+        profile.about_me = about_me
+        profile.save()
+
+    def config_field_username(self, *args, **kwargs):
+        username_field = self.form.fields.get('username')
+        username_field.widget = TextInput(attrs={
+                'placeholder': self.user.username,
+                'disabled': True,
+            })
 
 
 def logout(request):

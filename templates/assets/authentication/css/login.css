@@ -32,7 +32,7 @@
   }
 
 .form-content {
-  padding: 3rem;
+  padding: 2rem 3rem 3rem 3rem;
 }
 
   .form-content input[type="text"],
@@ -55,21 +55,36 @@
     text-align: end;
   }
 
-    .form-content input[type="submit"] {
-      margin-top: 1.5rem;
-      padding: 1.7rem 3.5rem;
-      background-color: rgb(2, 207, 2);
-      font-weight: bold;
-      font-size: 2.4rem;
-      color: white;
-      border-radius: 2rem;
-      border: .5px solid rgb(2, 155, 2);
-      box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.233);
-      transition: all 200ms ease-in-out;
+    .form-content .submit-div a {
+      background-color: rgb(216, 45, 45);
+      border: .5px solid rgb(218, 22, 22);
+      float: left;
     }
+
+    .form-content input[type="submit"] {
+      border: .5px solid rgb(2, 155, 2);
+      background-color: rgb(2, 207, 2);
+    }
+
+
+  .form-content input[type="submit"],
+  .form-content .submit-div a {
+    margin-top: 1.5rem;
+    padding: 1.7rem 3.5rem;
+    font-weight: bold;
+    font-size: 2.4rem;
+    color: white;
+    border-radius: 2rem;
+    box-shadow: 1px 1px 1px rgba(0, 0, 0, 0.233);
+    transition: all 200ms ease-in-out;
+  }
 
   .form-content input:focus[type="submit"] {
     background-color: rgb(2, 155, 2)  ;
+  }
+
+  .form-content input:hover[disabled] {
+    cursor: not-allowed;
   }
 
   .create-profile-div {

@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 
 from pathlib import Path
 from django.urls import reverse_lazy
+from django.contrib.messages import constants
+
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -157,5 +159,9 @@ CHANNEL_LAYERS = {
 }
 
 
-
 LOGIN_URL = reverse_lazy('authentication:login')
+
+
+MESSAGE_TAGS = {
+    constants.SUCCESS: "alert-success",
+}

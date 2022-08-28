@@ -5,9 +5,7 @@ const $friendListHeader = document.querySelector('.friends-list-header')
 
 document.body.style.zoom = "100%"
 
-console.log($friendListHeader.firstElementChild.nextElementSibling)
-
-if (window.screen.height <= 800 || window.screen.width <= 900) {
+if (window.screen.height <= 895) {
   $friendListHeader.firstElementChild.classList.add("display-none")
   $friendListHeader.firstElementChild.nextElementSibling.firstElementChild.classList.add("display-none")
 }

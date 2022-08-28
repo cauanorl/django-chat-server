@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block head %}
+  <title>{{ request.user }} account</title>
+  <link rel="stylesheet" href="{% static "authentication/css/login.css" %}">
+{% endblock head %}
+
+
+{% block content %}
+  <main class="container-login">
+    <div class="login">
+      <div class="chat-header">
+        <h1>{{ request.user }} account</h1>
+      </div>
+      
+      <div class="form-content">
+          {% if messages %}
+            {% for message in messages %}
+              <div class="alert {{ message.tags }}" role="alert">
+                {{ message }}
+              </div>
+            {% endfor %}
+          {% endif %}
+        <form method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {% for field in form %}
+            <div class="{% if field.errors %}error{% endif %}">
+              {{ field }}
+              {{ field.errors }}
+            </div>
+          {% endfor %}
+          <hr>
+          <div class="submit-div">
+            <a href="{% url "authentication:logout" %}" class="logout">Sair</a>
+
+            <input type="submit" value="Atualizar">
+          </div>
+        </form>
+      </div>
+    </div>
+  </main>
+{% endblock %}
