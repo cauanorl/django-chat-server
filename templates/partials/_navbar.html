@@ -74,7 +74,7 @@
                           {% if not friend_request_user.profile.photo %}
                             src="{% static 'default_image/EU.jpg' %}"
                           {% else %}
-                            src="{% thumbnail friend_request_user.profile.photo 300x300 crop=300 %}"
+                            src="{% thumbnail friend_request_user.profile.photo 300x300 crop=True %}"
                           {% endif %}
                           class="rounded-circle principal-user-img"
                           alt="Black and White Portrait of a Man"
@@ -112,7 +112,7 @@
                           {% if not wait_friend.profile.photo %}
                             src="{% static 'default_image/EU.jpg' %}"
                           {% else %}
-                            src="{% thumbnail wait_friend.profile.photo 300x300 crop=300 %}"
+                            src="{% thumbnail wait_friend.profile.photo 300x300 crop=True %}"
                           {% endif %}
                           class="rounded-circle principal-user-img"
                           alt="Black and White Portrait of a Man"
