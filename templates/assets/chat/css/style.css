@@ -200,12 +200,13 @@ Chat
   display: inline-block;
 }
 
-.send-files a {
+.send-files div {
   color: var(--color-three);
   transition: color 200ms ease-in-out;
 }
 
-.send-files a:hover, .send-files a:focus {
+.send-files div:hover, .send-files div:focus {
+  cursor: pointer;
   color: var(--color-four)
 }
 
@@ -231,7 +232,6 @@ Mensagens
   word-break: break-all;
   background-color: rgb(240, 240, 240);
   margin-left: 2rem;
-
 }
 
 .msg_time, .msg_time_send {
@@ -239,15 +239,18 @@ Mensagens
   position: absolute;
   bottom: -2.8rem;
   font-size: 1.3rem;
+  min-width: 15rem;
 }
 
 .msg_time {
   float: left;
+  text-align: left;
 }
 
 .msg_time_send {
   right: 0;
   color: #4f4f4f;
+  text-align: end;
 }
 
 /* User message style */

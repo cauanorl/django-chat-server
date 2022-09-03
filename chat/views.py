@@ -10,6 +10,7 @@ from django.shortcuts import render
 
 from authentication.models import Friend
 from .models import MessageTextType, Message
+from .forms import MessageImageForm
 
 
 # Create your views here.
@@ -53,6 +54,8 @@ class ChatFriendAjax(AjaxRequiredMixin, View):
     def post(self, request, *args, **kwargs):
         context = {}
 
+        image_form = MessageImageForm()
+
         friend_id = self.request.POST.get('friend_id')
         friend_object = get_object_or_404(Friend, id=friend_id)
 
@@ -70,6 +73,7 @@ class ChatFriendAjax(AjaxRequiredMixin, View):
             'messages': messages,
             'friend': friend,
             'friend_object': friend_object,
+            'image_form': image_form,
         })
 
         return render(request, "chat/ajax_html/_friend_chat.html", context)

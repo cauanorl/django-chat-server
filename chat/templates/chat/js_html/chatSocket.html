@@ -19,12 +19,14 @@ const Main = {
 
     // O input
     this.$inputMessage = document.querySelector('.send-message')
-  
+
     // Ul que fica a lista de amigos
     this.$friendsList = document.querySelectorAll('.friends-list')
   
     // O HTML do chat completo
     this.$chatDisplay = document.getElementById('chat_display')
+
+    this.$imageButton = document.querySelector('i.fas.fa-image.fa-3x')
 
   },
 
@@ -58,7 +60,16 @@ const Main = {
       }
     });
 
-    this.$inputMessage.onkeypress = self.Events.inputText_keypress.bind(self)
+    if (this.$inputMessage) {
+      this.$inputMessage.onkeypress = self.Events.inputText_keypress.bind(self)
+    }
+
+    if (this.$imageButton) {
+      console.log(this.$imageButton)
+      this.$imageButton.onclick = function(e) {
+        console.log('teste')
+      }
+    }
 
   },
 
@@ -87,7 +98,7 @@ const Main = {
 
       // Evento de message do WebSocket
       chatSocket.onmessage = this.receiveChatMessage
-      
+
       chatSocket.onclose = function(e) {
         console.log(`WebSocket: ${chatSocket.url} is closed`);
       }
@@ -154,6 +165,10 @@ const Main = {
 
       // Desconecta do WebSocket atual para conectar a outro
       if (this.chatSocket) {
+        // Se o chat atual for o mesmo que o que o usuário quer conectar
+        if (this.chatSocket.url.includes(`/${friend_model_id}/`)) {
+          return
+        }
         this.chatSocket.close()
         delete this.chatSocket
       }
@@ -179,9 +194,6 @@ const Main = {
         this.$chatMessage.scrollTop = this.$chatMessage.scrollHeight
       })
 
-      // Quando o usuário abrir um chat, o botão de enviar
-      // mensagem sairá do display none
-      this.$sendMessageForm.classList.remove('display_none');
     },
 
     // Evento de click que envia a mensagem do usuário para o WebSocket
