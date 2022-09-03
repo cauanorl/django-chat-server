@@ -150,7 +150,7 @@ class UpdateAccountForm(UserAndProfileAbstractForm):
                     max_length=50,
                     required=False,
                     widget=forms.PasswordInput(
-                            attrs={'placeholder': 'Mudar senha...'}))
+                            attrs={'placeholder': 'Nova senha...'}))
 
     repeat_password = forms.CharField(
                     max_length=50,

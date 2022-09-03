@@ -3,9 +3,12 @@
 const $navInputs = document.querySelectorAll('input.input-friend')
 const $friendListHeader = document.querySelector('.friends-list-header')
 
-document.body.style.zoom = "100%"
-
 if (window.screen.height <= 895) {
+  $friendListHeader.firstElementChild.classList.add("display-none")
+  $friendListHeader.firstElementChild.nextElementSibling.firstElementChild.classList.add("display-none")
+}
+
+if ($friendListHeader.clientHeight <= 67) {
   $friendListHeader.firstElementChild.classList.add("display-none")
   $friendListHeader.firstElementChild.nextElementSibling.firstElementChild.classList.add("display-none")
 }

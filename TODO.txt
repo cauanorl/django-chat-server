@@ -23,3 +23,7 @@ Tasks
 --> Responsividade de todas as páginas
 
 --> Javascript para controlar a responsividade da navbar
+
+--> Botão de remover amigo (Perguntar antes de remover)
+
+--> Botão de bloquear usuário
