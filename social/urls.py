@@ -10,7 +10,7 @@ urlpatterns = [
          name="list_users"),
 
     path('friend-request/',
-         views.CreateSolicitationInviteView.as_view(),
+         views.CreateSolicitationInviteViewAjax.as_view(),
          name="friend_request"),
 
     path('friend-request-response/',
@@ -18,6 +18,6 @@ urlpatterns = [
          name="response_friend"),
 
     path('ajax-count-friend-requests/',
-         views.UpdateNewFriendsRequest.as_view(),
+         views.UpdateNewFriendsRequestAjax.as_view(),
          name="count_request_view"),
 ]

@@ -164,4 +164,5 @@ LOGIN_URL = reverse_lazy('authentication:login')
 
 MESSAGE_TAGS = {
     constants.SUCCESS: "alert-success",
+    constants.ERROR: "alert-danger",
 }

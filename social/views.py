@@ -1,4 +1,4 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import JsonResponse
 from django.shortcuts import get_object_or_404
 
 from django.contrib.auth.models import User
@@ -27,7 +27,7 @@ class UserListView(LoginRequiredMixin, ListView):
         return qs
 
 
-class CreateSolicitationInviteView(
+class CreateSolicitationInviteViewAjax(
             LoginRequiredMixin, TemplateResponseMixin, View):
     """
     Classe que envia a solicitação de amizade
@@ -38,6 +38,12 @@ class CreateSolicitationInviteView(
 
         # Seleciona o usuário que receberá a solicitação
         other_user = get_object_or_404(User, id=friend_id)
+
+        friend_already_exists = Friend.objects.filter(
+            user_one=user, user_two=other_user).first()
+        if friend_already_exists:
+            friend_already_exists.delete()
+            return JsonResponse({'status': 'ok'})
 
         # Cria um objeto Friend onde user_one é quem enviou a solicitação
         friend = Friend.objects.create(
@@ -50,7 +56,7 @@ class CreateSolicitationInviteView(
         other_user.profile.friends.add(friend)
         user.profile.friends.add(friend)
 
-        return HttpResponse('Ok')
+        return JsonResponse({'status': 'ok'})
 
 
 class ResponseFriendRequestViewAjax(
@@ -66,7 +72,6 @@ class ResponseFriendRequestViewAjax(
         # Recebe a resposta do pedido como "accept" ou "refuse"
         response = self.request.POST.get('friend_response')
 
-        print(len(response))
         friend = get_object_or_404(Friend, id=model_friend_id)
 
         if response == "accept":
@@ -78,7 +83,10 @@ class ResponseFriendRequestViewAjax(
         return JsonResponse({'status': 'OK'})
 
 
-class UpdateNewFriendsRequest(AjaxRequiredMixin, View):
+class UpdateNewFriendsRequestAjax(AjaxRequiredMixin, View):
+    """
+    Atualiza o contador de requisições de amizades na Navbar
+    """
     def get(self, request, *args, **kwargs):
         user = self.request.user
 

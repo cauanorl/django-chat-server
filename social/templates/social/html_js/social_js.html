@@ -9,7 +9,7 @@ $inputsAddFriend.forEach(function(html_actual) {
   */
   html_actual.addEventListener('click', function(e) {
     e.preventDefault();
-    user_id = e.currentTarget.dataset.id
+    let user_id = e.currentTarget.dataset.id
     $.ajax({
       type: "POST",
       url: '{% url "social:friend_request" %}',
@@ -17,7 +17,26 @@ $inputsAddFriend.forEach(function(html_actual) {
         user_id: user_id,
       }
     }).done((response) => {
-      $('.form-add-friend')[0].innerHTML = "<span class='add-friend-ok'>Solicitação enviada</span>"
+      const $form = $('.form-add-friend')[0]
+
+      $form.innerHTML = `
+        <p class='add-friend-ok'>
+          Solicitação enviada,
+          <a href="" class="undo_${user_id}">Desfazer</a>
+        </p>
+      `
+      $(`a.undo_${user_id}`)[0].addEventListener('click', (e) => {
+        e.preventDefault();
+        $.post('{% url "social:friend_request" %}', {
+          user_id: user_id,
+        }).done((response) => {
+
+          $form.innerHTML = `
+            <p class='add-friend-ok'>Solicitação de amizade desfeita</p>
+          `
+        })
+      })
+
     })
   })
 })

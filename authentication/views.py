@@ -124,14 +124,20 @@ class EditProfile(LoginRequiredMixin, TemplateView, View):
             password = self.form.cleaned_data.get('password')
 
             if password:
-                self.set_password_and_login(username, password)
+                if auth.authenticate(
+                        self.request, username=username, password=password):
+                    messages.error(
+                        self.request,
+                        "Senha não pode ser a mesma que a anterior")
+                else:
+                    self.set_password_and_login_in(username, password)
 
             self.update_profile()
             messages.success(self.request, "Configurações salvas com sucesso!")
 
         return self.render_to_response({'form': self.form})
 
-    def set_password_and_login(self, username, password):
+    def set_password_and_login_in(self, username, password):
         self.user.set_password(password)
         self.user.save()
 
@@ -155,6 +161,9 @@ class EditProfile(LoginRequiredMixin, TemplateView, View):
                 'placeholder': self.user.username,
                 'disabled': True,
             })
+
+    def compare_old_datas_and_new_datas(self, *args, **kwargs):
+        ...
 
 
 def logout(request):
